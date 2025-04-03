@@ -325,17 +325,12 @@ return [
 
     // BOTÓN PARA CATEGORÍAS
     [
-        'text'  => 'Categorías',
+        'text'  => 'Categorías & Materiales',
         'icon'  => 'fas fa-tags',
         'route' => 'categorias.index',
     ],
 
-    // BOTÓN PARA MATERIALES
-    [
-        'text'  => 'Materiales',
-        'icon'  => 'fas fa-cube',
-        'route' => 'materiales.index',
-    ],
+    
 ],
 
 

@@ -31,9 +31,10 @@ Route::middleware([
    
 
     Route::get('/articulos/{articulo}/edit', [ArticuloController::class, 'edit'])->name('articulos.edit');
+    Route::get('/articulos/{articulo}', [ArticuloController::class, 'show'])->name('articulos.show');
 
         // Ruta para ver detalle
-    Route::get('/articulos/{articulo}', function(ArticuloController $articulo) {
-        return view('articulos.show', compact('articulo'));
-    })->name('articulos.show');
+    // Route::get('/articulos/{articulo}', function(ArticuloController $articulo) {
+    //     return view('articulos.show', compact('articulo'));
+    // })->name('articulos.show');
 });

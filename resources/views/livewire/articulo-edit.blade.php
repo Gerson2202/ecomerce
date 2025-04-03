@@ -46,7 +46,7 @@
                 <label class="mb-2">Materiales <span class="text-danger">*</span></label>
                 <div class="row">
                     @foreach($todosMateriales as $material)
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-check">
                                 <input 
                                     type="checkbox" 
@@ -111,8 +111,9 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save mr-2"></i>Guardar Cambios
                 </button>
-                <a href="{{ route('articulos.index') }}" class="btn btn-secondary ml-2">
-                    <i class="fas fa-times mr-2"></i>Cancelar
+                
+                <a href="{{ route('articulos.show', $articulo_id) }}" class="btn btn-success ml-2">
+                    <i class="fas fa-eye mr-2"></i>Ver articulo
                 </a>
             </div>
         </form>

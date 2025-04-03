@@ -36,7 +36,8 @@ class ArticuloController extends Controller
      */
     public function show(Articulo $articulo)
     {
-        //
+        
+        return view('articulos.show', compact('articulo'));
     }
 
     /**

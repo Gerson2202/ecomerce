@@ -56,10 +56,31 @@ class CategoriasComponent extends Component
         $this->dispatch('notify', type: 'success', message: 'Categoría creada con éxito');
     }
 
+    // Funcion para eliminar la categoria
     public function delete($id)
     {
-        Categoria::find($id)->delete();
-        $this->dispatch('notify', type: 'error', message: 'Categoría eliminada');
+        try {
+            if (Categoria::find($id)?->delete()) {
+                $this->dispatch('notify',
+                    type: 'success',
+                    message: 'Categoría eliminada'
+                );
+            } else {
+                $this->dispatch('notify',
+                    type: 'error',
+                    message: 'Categoría no encontrada'
+                );
+            }
+        } catch (\Exception $e) {
+            $message = ($e->getCode() == 23000) 
+                ? 'No se puede eliminar (tiene articulos asociados)' 
+                : 'Error al eliminar';
+                
+            $this->dispatch('notify',
+                type: 'error',
+                message: $message
+            );
+        }
     }
 
     public function edit($id)
@@ -70,7 +91,7 @@ class CategoriasComponent extends Component
         $this->descripcion = $categoria->descripcion;
         $this->modal = true;
     }
-
+    // Funcion para actualizar categoria
     public function update()
     {
         $this->validate();
@@ -90,48 +111,76 @@ class CategoriasComponent extends Component
     }
 
 
-    // Métodos para materiales
-public function createMaterial()
-{
-    $this->reset(['nombre_material', 'material_id']);
-    $this->modal_material = true;
-}
+    // Métodos para abrir modal de materiales agregar
+    public function createMaterial()
+    {
+        $this->reset(['nombre_material', 'material_id']);
+        $this->modal_material = true;
+    }
+    // Funcion para guardar el material
 
-public function storeMaterial()
-{
-    $this->validate(['nombre_material' => 'required|string|max:255']);
-    
-    Material::create(['nombre' => $this->nombre_material]);
-    
-    $this->reset(['nombre_material', 'modal_material']);
-    $this->dispatch('notify', type: 'success', message: 'Material creado');
-}
+    public function storeMaterial()
+    {
+        $this->validate(['nombre_material' => 'required|string|max:255']);
+        
+        Material::create(['nombre' => $this->nombre_material]);
+        
+        $this->reset(['nombre_material', 'modal_material']);
+        $this->dispatch('notify', type: 'success', message: 'Material creado');
+    }
 
-// Agrega este método para edición
-public function editMaterial($id)
-{
-    $material = Material::findOrFail($id);
-    $this->material_id = $material->id;
-    $this->nombre_material = $material->nombre;
-    $this->modal_material = true;
-}
+    // Agrega este método para edición de material
+    public function editMaterial($id)
+    {
+        $material = Material::findOrFail($id);
+        $this->material_id = $material->id;
+        $this->nombre_material = $material->nombre;
+        $this->modal_material = true;
+    }
 
-// Método para actualizar
-public function updateMaterial()
-{
-    $this->validate(['nombre_material' => 'required|string|max:255']);
-    
-    Material::find($this->material_id)->update([
-        'nombre' => $this->nombre_material
-    ]);
-    
-    $this->reset(['nombre_material', 'material_id', 'modal_material']);
-    $this->dispatch('notify', type: 'info', message: 'Material actualizado');
-}
-public function deleteMaterial($id)
-{
-    Material::find($id)->delete();
-    $this->dispatch('notify', type: 'error', message: 'Material eliminado');
-}
+    // Método para actualizar Material
+    public function updateMaterial()
+    {
+        $this->validate(['nombre_material' => 'required|string|max:255']);
+        
+        Material::find($this->material_id)->update([
+            'nombre' => $this->nombre_material
+        ]);
+        
+        $this->reset(['nombre_material', 'material_id', 'modal_material']);
+        $this->dispatch('notify', type: 'info', message: 'Material actualizado con Exito!');
+    }
+
+    // Funcion para eliminar el material
+    public function deleteMaterial($id)
+    {
+        try {
+            $material = Material::find($id);
+            
+            if (!$material) {
+                $this->dispatch('notify', 
+                    type: 'error',
+                    message: 'El material no existe'
+                );
+                return;
+            }
+            
+            $material->delete();
+            $this->dispatch('notify', type: 'success', message: 'Material eliminado correctamente');
+            
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == 23000) {
+                $this->dispatch('notify',
+                    type: 'error',
+                    message: 'No se puede eliminar: el material está asociado a uno o mas articulos'
+                );
+            } else {
+                $this->dispatch('notify',
+                    type: 'error',
+                    message: 'Error al eliminar el material'
+                );
+            }
+        }
+    }
 }
 

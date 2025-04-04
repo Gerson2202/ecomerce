@@ -331,10 +331,16 @@ return [
     ],
 
       // BOTÓN PARA NUMERALES Y DIMENSIONES
-      [
+    [
         'text'  => 'Dimensiones',
         'icon'  => 'fas fa-tags',
         'route' => 'dimensiones.index',
+    ],
+
+    [
+        'text'  => 'Vista de cliente',
+        'icon'  => 'fas fa-tags',
+        'route' => 'pagina.index',
     ],
     
 ],

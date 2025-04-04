@@ -41,4 +41,8 @@ Route::middleware([
 
     Route::get('/dimensiones', [DimensionController::class, 'index'])->name('dimensiones.index');
 
+
+    Route::get('/pagina', function () {
+        return view('pagina.index');
+    })->name('pagina.index');
 });

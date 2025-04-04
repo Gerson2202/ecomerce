@@ -29,6 +29,12 @@ class Articulo extends Model
         return $this->hasMany(Foto::class);
     }
 
+    // Método para obtener la primera foto (para la vista principal)
+    public function fotoPrincipal()
+    {
+        return $this->fotos()->first();
+    }
+    
     public function getFotosUrlsAttribute()
     {
         return $this->fotos->map(function ($foto) {

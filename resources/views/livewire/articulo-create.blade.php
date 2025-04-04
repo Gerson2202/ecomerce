@@ -48,6 +48,24 @@
                     </div>
                     @error('materialesSeleccionados') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
+                <!-- Selección de Numerales -->
+                <div class="form-group mt-4">
+                    <label class="font-weight-bold">Numerales aplicables</label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
+                        @foreach($numerals as $numeral)
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" 
+                                    wire:model="numeralsSeleccionados" 
+                                    value="{{ $numeral->id }}"
+                                    class="rounded text-blue-600">
+                                <span class="ml-2">Numeral {{ $numeral->numero }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    @error('numeralsSeleccionados') 
+                        <span class="text-red-500 text-sm">{{ $message }}</span> 
+                    @enderror
+                </div>
     
                 <div class="container mt-3">
                     <!-- Input de archivo estilizado -->

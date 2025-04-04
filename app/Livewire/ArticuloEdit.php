@@ -5,6 +5,7 @@ use Livewire\Component;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Material;
+use App\Models\Numeral;
 // Reemplaza cualquier import incorrecto con:
 use Illuminate\Support\Facades\Storage; // Este es el correcto
 use Livewire\WithFileUploads;
@@ -20,10 +21,13 @@ class ArticuloEdit extends Component
     public $dimensiones;
     public $categoria_id;
     public $materialesSeleccionados = []; // Array para checkboxes
+    public $numeralesSeleccionados = []; // Array para checkboxes
+
     public $fotos = [];
     public $fotosExistentes = [];
     public $categorias;
     public $todosMateriales; // Todos los materiales disponibles
+    public $todosNumerales; // Todos los materiales disponibles
 
     protected $rules = [
         'nombre' => 'required|string|max:255',
@@ -32,11 +36,13 @@ class ArticuloEdit extends Component
         'categoria_id' => 'required|exists:categorias,id',
         'fotos.*' => 'image|max:2048',
         'materialesSeleccionados' => 'required|array|min:1',
+        'numeralesSeleccionados' => 'required|array|min:1',
+
     ];
 
     public function mount($articuloId)
     {
-        $articulo = Articulo::with(['fotos', 'materiales'])->findOrFail($articuloId);
+        $articulo = Articulo::with(['fotos', 'materiales','numerales'])->findOrFail($articuloId);
         
         $this->articulo_id = $articulo->id;
         $this->nombre = $articulo->nombre;
@@ -45,9 +51,11 @@ class ArticuloEdit extends Component
         $this->categoria_id = $articulo->categoria_id;
         $this->fotosExistentes = $articulo->fotos;
         $this->materialesSeleccionados = $articulo->materiales->pluck('id')->toArray(); // IDs iniciales
-        
+        $this->numeralesSeleccionados = $articulo->numerales->pluck('id')->toArray(); // IDs iniciales
+
         $this->categorias = Categoria::all();
         $this->todosMateriales = Material::all(); // Carga todos los materiales
+        $this->todosNumerales = Numeral::all(); // Carga todos los materiales
     }
 
     public function update()
@@ -63,6 +71,7 @@ class ArticuloEdit extends Component
     ]);
 
     $articulo->materiales()->sync($this->materialesSeleccionados);
+    $articulo->numerales()->sync($this->numeralesSeleccionados);
 
     foreach ($this->fotos as $foto) {
         $path = $foto->store('articulos', 'public');

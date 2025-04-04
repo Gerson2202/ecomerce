@@ -85,6 +85,50 @@
                                             {{ $articulo->stock }} unidades
                                         </span>
                                     </dd>
+                                    
+                                    @if($articulo->numerales->count() > 0)
+                                        <dt class="col-sm-4">Numerales:</dt>
+                                        <dd class="col-sm-8">
+                                            <div class="accordion" id="numeralesAccordion">
+                                                @foreach($articulo->numerales as $numeral)
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header" id="heading{{ $numeral->id }}">
+                                                            <button class="accordion-button collapsed" type="button" 
+                                                                    data-bs-toggle="collapse" 
+                                                                    data-bs-target="#collapse{{ $numeral->id }}" 
+                                                                    aria-expanded="false" 
+                                                                    aria-controls="collapse{{ $numeral->id }}">
+                                                                Numeral {{ $numeral->numero }}
+                                                            </button>
+                                                        </h2>
+                                                        <div id="collapse{{ $numeral->id }}" 
+                                                            class="accordion-collapse collapse" 
+                                                            aria-labelledby="heading{{ $numeral->id }}" 
+                                                            data-bs-parent="#numeralesAccordion">
+                                                            <div class="accordion-body">
+                                                                @if($numeral->dimensiones->count() > 0)
+                                                                    <ul class="list-group list-group-flush">
+                                                                        @foreach($numeral->dimensiones as $dimension)
+                                                                            <li class="list-group-item">
+                                                                                Medida: {{ $dimension->medida }}
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                @else
+                                                                    <p class="text-muted">Este numeral no tiene medidas registradas</p>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </dd>
+                                    @else
+                                        <dt class="col-sm-4">Numerales:</dt>
+                                        <dd class="col-sm-8">
+                                            <span class="text-muted">No tiene numerales asociados</span>
+                                        </dd>
+                                    @endif
                                 </dl>
                             </div>
                         </div>

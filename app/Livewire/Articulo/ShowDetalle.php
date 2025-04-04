@@ -11,6 +11,7 @@ class ShowDetalle extends Component
     public $articulo;
     public $materiales;
     public $fotos;
+    public $numerales;
     public $imagenAmpliada = null;
 
     public function mostrarImagen($rutaImagen)
@@ -25,9 +26,10 @@ class ShowDetalle extends Component
 
     public function mount($id)
     {
-        $this->articulo = Articulo::with(['materiales', 'fotos'])->findOrFail($id);
+        $this->articulo = Articulo::with(['materiales', 'fotos','numerales.dimensiones'])->findOrFail($id);
         $this->materiales = $this->articulo->materiales;
         $this->fotos = $this->articulo->fotos;
+        $this->numerales= $this->articulo->articuloNumerales;
     }
     public function render()
     {

@@ -67,6 +67,31 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label class="mb-2">Numerales <span class="text-danger">*</span></label>
+                <div class="row">
+                    @foreach($todosNumerales as $numeral)
+                        <div class="col-md-2">
+                            <div class="form-check">
+                                <input 
+                                    type="checkbox" 
+                                    wire:model="numeralesSeleccionados"
+                                    value="{{ $numeral->id }}"
+                                    id="material-{{ $numeral->id }}"
+                                    class="form-check-input"
+                                >
+                                <label for="numeral-{{ $numeral->id }}" class="form-check-label">
+                                    #{{ $numeral->numero }}
+                                </label>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                @error('numeralesSeleccionados') 
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
+            </div>
+
 
             <!-- Fotos existentes -->
             <div class="form-group">

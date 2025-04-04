@@ -36,18 +36,23 @@ class Articulo extends Model
         });
     }
 
-    public function numerales(): BelongsToMany
+    // public function numerales(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Numeral::class)
+    //                ->using(ArticuloNumeral::class)
+    //                ->withPivot([
+    //                    'campo1', 
+    //                    'campo2'
+    //                    // otros campos pivote si existen
+    //                ])
+    //                ->withTimestamps();
+    // }
+    public function numerales()
     {
-        return $this->belongsToMany(Numeral::class)
-                   ->using(ArticuloNumeral::class)
-                   ->withPivot([
-                       'campo1', 
-                       'campo2'
-                       // otros campos pivote si existen
-                   ])
-                   ->withTimestamps();
+        
+        return $this->belongsToMany(Numeral::class);
+        
     }
-    
     /**
      * Acceso directo a los registros pivote
      */

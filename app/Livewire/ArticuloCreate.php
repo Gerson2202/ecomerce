@@ -7,8 +7,10 @@ use Livewire\Component;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use App\Models\Material;
+use App\Models\Numeral;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+
 
 class ArticuloCreate extends Component
 {
@@ -18,6 +20,9 @@ class ArticuloCreate extends Component
     public $materialesSeleccionados = []; // Para almacenar IDs de materiales seleccionados
     public $fotos = [];
     public $categorias, $todosMateriales; // Cambiado a $todosMateriales para mejor claridad
+    // Agrega estas propiedades al componente
+    public $numerals = []; // Todos los numerales disponibles
+    public $numeralsSeleccionados = []; // Los que el usuario seleccione
 
     protected $rules = [
         'nombre' => 'required|string|max:255',
@@ -26,6 +31,8 @@ class ArticuloCreate extends Component
         'categoria_id' => 'required|exists:categorias,id',
         'fotos.*' => 'image|max:2048', // 2MB max
         'materialesSeleccionados' => 'required|array|min:1', // Obligatorio al menos 1 material
+        'numeralsSeleccionados' => 'required|array|min:1',
+        'numeralsSeleccionados.*' => 'exists:numerals,id',
     ];
 
     protected $messages = [
@@ -37,6 +44,7 @@ class ArticuloCreate extends Component
     {
         $this->categorias = Categoria::all();
         $this->todosMateriales = Material::all(); // Todos los materiales disponibles
+        $this->numerals = Numeral::all(); // Asegúrate de importar el modelo
     }
 
     public function save()
@@ -53,6 +61,9 @@ class ArticuloCreate extends Component
 
         // Sincronizar materiales (mejor que attach para evitar duplicados)
         $articulo->materiales()->sync($this->materialesSeleccionados);
+        
+        // Adjunta los numerales seleccionados
+        $articulo->numerales()->sync($this->numeralsSeleccionados);
 
         // Guardar fotos con manejo de errores
         foreach ($this->fotos as $foto) {
@@ -74,7 +85,8 @@ class ArticuloCreate extends Component
             'dimensiones', 
             'categoria_id', 
             'fotos', 
-            'materialesSeleccionados'
+            'materialesSeleccionados',
+            'numeralsSeleccionados'
         ]);
 
         // Notificación Toastr

@@ -9,11 +9,15 @@
                 <div class="card-body">
                     <div class="input-group mb-3">
                         <input 
-                            wire:model="numero" 
-                            type="number" 
-                            placeholder="Nuevo numeral" 
-                            class="form-control"
-                        >
+                        wire:model="numero"
+                        type="number"
+                        min="0"
+                        max="20"
+                        step="1"
+                        placeholder="Nuevo numeral (0-20)"
+                        class="form-control"
+                        oninput="this.value = Math.abs(this.value) > 20 ? 20 : Math.abs(this.value)"
+                    >
                         <button 
                             wire:click="guardarNumeral" 
                             class="btn btn-primary"
@@ -42,7 +46,7 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button 
-                                            class="btn btn-sm btn-outline-danger"
+                                            class="btn btn-sm btn-outline-danger disabled"
                                             onclick="confirm('¿Eliminar este numeral?') || event.stopImmediatePropagation()"
                                             wire:click="eliminarNumeral({{ $numeral->id }})"
                                         >

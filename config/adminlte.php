@@ -330,6 +330,12 @@ return [
         'route' => 'categorias.index',
     ],
 
+      // BOTÓN PARA NUMERALES Y DIMENSIONES
+      [
+        'text'  => 'Dimensiones',
+        'icon'  => 'fas fa-tags',
+        'route' => 'dimensiones.index',
+    ],
     
 ],
 

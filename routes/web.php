@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DimensionController;
 use App\Http\Controllers\MaterialController;
 Route::get('/', function () {
     return view('welcome');
@@ -37,4 +38,7 @@ Route::middleware([
     // Route::get('/articulos/{articulo}', function(ArticuloController $articulo) {
     //     return view('articulos.show', compact('articulo'));
     // })->name('articulos.show');
+
+    Route::get('/dimensiones', [DimensionController::class, 'index'])->name('dimensiones.index');
+
 });

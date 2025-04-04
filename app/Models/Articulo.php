@@ -35,4 +35,24 @@ class Articulo extends Model
             return asset('storage/'.$foto->url);
         });
     }
+
+    public function numerales(): BelongsToMany
+    {
+        return $this->belongsToMany(Numeral::class)
+                   ->using(ArticuloNumeral::class)
+                   ->withPivot([
+                       'campo1', 
+                       'campo2'
+                       // otros campos pivote si existen
+                   ])
+                   ->withTimestamps();
+    }
+    
+    /**
+     * Acceso directo a los registros pivote
+     */
+    public function articuloNumerales()
+    {
+        return $this->hasMany(ArticuloNumeral::class);
+    }
 }

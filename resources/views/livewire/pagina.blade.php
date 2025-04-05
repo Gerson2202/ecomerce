@@ -2,10 +2,214 @@
     <!-- CSS de Bootstrap y estilos personalizados -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
 
-        /* Stilos para las fotos en los cuadros  */
-        .clickable-area {
+    {{-- Stilos para los iconos --}}
+    <style>
+        /* Estilos para las banderas */
+        .social-btn .flag {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            font-size: 16px;
+            background: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+        }
+        /* CONTENEDOR PRINCIPAL */
+        .social-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* ESTILOS BASE PARA BOTONES */
+        .social-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 26px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* TOOLTIPS A LA IZQUIERDA */
+        .social-btn::before {
+            content: attr(title);
+            position: absolute;
+            right: calc(100% + 15px);
+            top: 50%;
+            transform: translateY(-50%) translateX(10px);
+            background: rgba(40, 40, 40, 0.95);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            min-width: max-content;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* FLECHA DEL TOOLTIP (AHORA A LA DERECHA) */
+        .social-btn::after {
+            content: '';
+            position: absolute;
+            right: calc(100% + 5px);
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent transparent rgba(40, 40, 40, 0.95);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* ANIMACIONES DE HOVER */
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-btn:hover::before {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .social-btn:hover::after {
+            opacity: 1;
+        }
+
+        /* ESTILOS ESPECÍFICOS PARA CADA BOTÓN */
+        .btn-instagram {
+            
+            background: linear-gradient(45deg, #405DE6, #833AB4, #C13584, #E1306C, #FD1D1D);
+            border: 2px solid #fff;
+
+        }
+
+        .btn-whatsapp-co {
+            background: linear-gradient(135deg, #25D366, #0ABF53);
+            border: 2px solid #fff;
+        }
+
+        .btn-whatsapp-ve {
+            background: linear-gradient(135deg, #128C7E, #075E54);
+            border: 2px solid #fff;
+        }
+
+        /* COLORES DE TOOLTIP POR BOTÓN */
+        .btn-instagram::before {
+            background: linear-gradient(45deg, rgba(64, 93, 230, 0.95), rgba(193, 53, 132, 0.95));
+        }
+
+        .btn-instagram::after {
+            border-left-color: rgba(193, 53, 132, 0.95);
+        }
+
+        .btn-whatsapp-co::before {
+            background: rgba(37, 211, 102, 0.95);
+        }
+
+        .btn-whatsapp-co::after {
+            border-left-color: rgba(37, 211, 102, 0.95);
+        }
+
+        .btn-whatsapp-ve::before {
+            background: rgba(18, 140, 126, 0.95);
+        }
+
+        .btn-whatsapp-ve::after {
+            border-left-color: rgba(18, 140, 126, 0.95);
+        }
+
+        /* EFECTO DE ONDA PARA WHATSAPP */
+        .btn-whatsapp-co:hover,
+        .btn-whatsapp-ve:hover {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateY(-3px) scale(1); }
+            50% { transform: translateY(-3px) scale(1.05); }
+            100% { transform: translateY(-3px) scale(1); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .social-float {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .social-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            
+            .social-btn::before {
+                font-size: 13px;
+                padding: 6px 12px;
+                right: calc(100% + 10px);
+            }
+            
+            .social-btn::after {
+                right: calc(100% + 2px);
+            }
+        }
+    </style>
+    {{-- Stilos para las imagenes en los recuadros --}}
+    <style>
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-nav .nav-link i {
+            margin-right: 0.5rem;
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-item {
+            padding: 0.5rem 1.5rem;
+        }
+        .search-box {
+            width: 300px;
+        }
+        @media (max-width: 992px) {
+            .search-box {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .navbar-nav {
+                margin-top: 10px;
+            }
+        }
+         /* Stilos para las fotos en los cuadros  */
+         .clickable-area {
             cursor: pointer;
             height: 200px; /* Altura fija para el contenedor */
             display: flex;
@@ -38,71 +242,34 @@
         }
 
         /* FINAL */
-
-        /* estilos de inconos de redes */
-            .social-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .social-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
-        }
-        .social-btn:hover {
-            transform: translateY(-5px);
-        }
-        .btn-whatsapp {
-            background-color: #25D366;
-        }
-        .btn-instagram {
-            background: linear-gradient(45deg, #405DE6, #833AB4, #C13584, #E1306C, #FD1D1D);
-        }
-        /* Fin */
-          .navbar-nav .nav-link {
-            padding: 0.5rem 1rem;
-            display: flex;
-            align-items: center;
-        }
-        .navbar-nav .nav-link i {
-            margin-right: 0.5rem;
-        }
-        .dropdown-menu {
-            border: none;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-        }
-        .dropdown-item {
-            padding: 0.5rem 1.5rem;
-        }
-        .search-box {
-            width: 300px;
-        }
-        @media (max-width: 992px) {
-            .search-box {
-                width: 100%;
-                margin: 10px 0;
-            }
-            .navbar-nav {
-                margin-top: 10px;
-            }
-        }
+    </style>
+    {{-- Stilos personalizados --}}
+    <style>
+ 
         /* Estilos personalizados */
         .hero-image {
-        height: 500px; /* Cambia este valor (ej: 500px, 600px, etc.) */
-        object-fit: cover;
-        width: 100%;
-         }
+            width: 100%;
+            height: 30vh; /* Para móviles */
+        }
+        
+        
+        @media (min-width: 768px) {
+            .hero-image {
+                height: 70vh; /* Para tablets */
+            }
+        }
+
+        @media (min-width: 1200px) {/* Para pc */
+            .hero-image {
+                width: 100%;
+                max-height: 70vh; /* Altura máxima */
+                min-height: 300px; /* Altura mínima para móviles */
+                height: auto; /* Altura flexible */
+                object-fit: contain;
+                object-position: center;
+                background-color: #f8f9fa;
+            }
+        }
         .product-img {
             height: 200px;
             object-fit: cover;
@@ -254,18 +421,21 @@
             <div class="carousel-inner">
                 <!-- 1. Virgen María -->
                 <div class="carousel-item active">
-                    <img src="https://images.pexels.com/photos/236339/pexels-photo-236339.jpeg" class="d-block w-100 hero-image" alt="Virgen María">
-                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-3">
-                        <h2 class="h3 fw-bold">Bienvenidos a nuestra comunidad</h2>
-                        <p>"Yo soy la luz del mundo" - Juan 8:12</p>
+                    <img src="{{ asset('storage/images/carrusel/comunidad-parroquia.jpg') }}" 
+                         class="d-block w-100 hero-image" 
+                         alt="Virgen María">
+                    <div class="carousel-caption">
+                        <div class="bg-dark bg-opacity-75 rounded p-2 d-inline-block" style="width: fit-content;">
+                            <h2 class="fs-6 fs-md-4 fw-bold mb-0">Imagenes religiosas</h2>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- 2. Jesús Buen Pastor -->
                 <div class="carousel-item">
-                    <img src="https://images.pexels.com/photos/415071/pexels-photo-415071.jpeg" class="d-block w-100 hero-image" alt="Jesús Buen Pastor">
-                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-3">
-                        <h2 class="h3 fw-bold">El buen pastor</h2>
+                    <img src="{{ asset('storage/images/carrusel/1.jpg') }}" class="d-block w-100 hero-image" alt="Jesús Buen Pastor">
+                    <div class="carousel-caption bg-dark bg-opacity-50 rounded p-1">
+                        <h2 class="fs-6 fs-md-4 fw-bold">El buen pastor</h2>
                         <p>"Yo soy el buen pastor" - Juan 10:11</p>
                     </div>
                 </div>
@@ -273,8 +443,8 @@
                 <!-- 3. Crucifixión -->
                 <div class="carousel-item">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Iglesia_Catolica_Apostolica_Ortodoxa_de_la_Santisima_Virgen_Maria_14.JPG/640px-Iglesia_Catolica_Apostolica_Ortodoxa_de_la_Santisima_Virgen_Maria_14.JPG" class="d-block w-100 hero-image" alt="Crucifixión">
-                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-3">
-                        <h2 class="h3 fw-bold">El sacrificio de amor</h2>
+                    <div class="carousel-caption bg-dark bg-opacity-75 rounded  p-sm-1 p-1">
+                        <h3 class="fs-6 fs-md-4 fw-bold">El sacrificio de amor</h2>
                         <p>"Nadie tiene mayor amor que este" - Juan 15:13</p>
                     </div>
                 </div>
@@ -282,8 +452,8 @@
                 <!-- 4. Biblia Abierta -->
                 <div class="carousel-item">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/GustaveDoreParadiseLostSatanProfile.jpg/640px-GustaveDoreParadiseLostSatanProfile.jpg" class="d-block w-100 hero-image" alt="Biblia">
-                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-3">
-                        <h2 class="h3 fw-bold">Palabra de Dios</h2>
+                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-sm-1 p-1">
+                        <h2 class="fs-6 fs-md-4 fw-bold">Palabra de Dios</h2>
                         <p>"Lámpara es a mis pies tu palabra" - Salmo 119:105</p>
                     </div>
                 </div>
@@ -430,7 +600,7 @@
                                 <h3 class="h5 fw-bold">Descripción</h3>
                                 <p class="text-muted">{{ $articuloSeleccionado->descripcion }}</p>
 
-                                <h3 class="h5 fw-bold">Materiales de contruccion</h3>
+                                <h3 class="h5 fw-bold">Materiales de construcción</h3>
                                 @if(isset($articuloSeleccionado->materiales) && count($articuloSeleccionado->materiales) > 0)
                                     <ul class="material-list">
                                         @foreach ($articuloSeleccionado->materiales as $material)
@@ -453,7 +623,7 @@
                                         </div>                                        <div class="dimensiones-list">
                                             @foreach($articuloSeleccionado->numerales as $numeral)
                                                 <div class="dimension-item">
-                                                    <span class="numeral"><strong>Tamaño#</strong>{{ $numeral->numero }}: </span>
+                                                    <span class="numeral"><strong>#{{ $numeral->numero }}:</strong> </span>
                                                     <span class="dimensiones">
                                                         @foreach($numeral->dimensiones as $dimension)
                                                              {{ $dimension->medida }}:cm
@@ -481,7 +651,15 @@
                            class="btn btn-success px-4 py-2"
                            target="_blank">
                             <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
+                            <span class="flag">🇨🇴</span> <!-- Emoji bandera Colombia -->
+
                         </a>
+                        <a href="https://wa.me/584161346677?text=Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}" 
+                            class="btn btn-success px-4 py-2"
+                            target="_blank">
+                             <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
+                             <span class="flag">🇻🇪</span> <!-- Emoji bandera Venezuela -->
+                         </a>
                     </div>
                 </div>
             </div>
@@ -489,21 +667,39 @@
     @endif
 
     <!-- Botones flotantes redes sociales -->
-    {{-- Instagram --}}
+    
     <div class="social-float">
-        <a href="https://www.instagram.com/imagenes_santabarbara/?igsh=MTlwaGI0aXZoemJraQ%3D%3D#" 
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/imagenes_santabarbara/" 
            class="social-btn btn-instagram"
            target="_blank"
-           title="Instagram">
-            <i class="bi bi-instagram fs-5"></i>
+           title="Instagram Santa Bárbara"
+           aria-label="Instagram"
+           data-country="IG">
+            <i class="bi bi-instagram"></i>
         </a>
-        {{-- facebook --}}
+        
+        <!-- WhatsApp Colombia -->
         <a href="https://wa.me/573202683321" 
-           class="social-btn btn-whatsapp"
+           class="social-btn btn-whatsapp-co"
            target="_blank"
-           title="WhatsApp">
-            <i class="bi bi-whatsapp fs-5"></i>
+           title="WhatsApp Colombia (+57)"
+           aria-label="WhatsApp Colombia"
+           data-country="CO">
+            <i class="bi bi-whatsapp"></i>
+            <span class="flag">🇨🇴</span> <!-- Emoji bandera Colombia -->
+
         </a>
+        
+        <!-- WhatsApp Venezuela -->
+        <a href="https://wa.me/584161346677" 
+           class="social-btn btn-whatsapp-ve"
+           target="_blank"
+           title="WhatsApp Venezuela (+58)"
+           aria-label="WhatsApp Venezuela"
+           data-country="VE">
+            <i class="bi bi-whatsapp"></i>
+            <span class="flag">🇻🇪</span> <!-- Emoji bandera Venezuela -->        </a>
     </div>
     <!-- Scripts de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -35,7 +35,7 @@ class Pagina extends Component
 
     public function mostrarArticulo($articuloId)
     {
-        $this->articuloSeleccionado = Articulo::with(['categoria', 'fotos'])->find($articuloId);
+        $this->articuloSeleccionado = Articulo::with(['categoria', 'fotos','materiales','numerales.dimensiones'])->find($articuloId);
         $this->mostrarModal = true;
     }
 

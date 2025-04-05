@@ -4,6 +4,41 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
 
+        /* Stilos para las fotos en los cuadros  */
+        .clickable-area {
+            cursor: pointer;
+            height: 200px; /* Altura fija para el contenedor */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #f8f9fa; /* Color de fondo para el contenedor */
+        }
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contained-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Esto evita el recorte y mantiene la proporción */
+        }
+
+        .no-image-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #f8f9fa;
+        }
+
+        /* FINAL */
+
         /* estilos de inconos de redes */
             .social-float {
             position: fixed;
@@ -283,24 +318,28 @@
             @else
                 <div class="row g-4">
                     @foreach($articulos as $articulo)
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="card h-100 shadow-sm border-0 overflow-hidden">
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="card h-100 shadow-sm border-0 overflow-hidden">
+                            <!-- Contenedor clickeable que envuelve tanto la imagen como el placeholder -->
+                            <div wire:click="mostrarArticulo({{ $articulo->id }})" class="clickable-area">
                                 @if($articulo->fotos->isNotEmpty())
-                                    <img src="{{ asset('storage/' . $articulo->fotos->first()->url) }}" 
-                                         class="card-img-top product-img"
-                                         wire:click="mostrarArticulo({{ $articulo->id }})"
-                                         alt="{{ $articulo->nombre }}">
+                                    <div class="image-container">
+                                        <img src="{{ asset('storage/' . $articulo->fotos->first()->url) }}" 
+                                             class="img-fluid contained-image"
+                                             alt="{{ $articulo->nombre }}">
+                                    </div>
                                 @else
-                                    <div class="no-image-placeholder">
-                                        <i class="bi bi-image fs-1"></i>
+                                    <div class="no-image-placeholder d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-image fs-1 text-muted"></i>
                                     </div>
                                 @endif
-                                <div class="card-body">
-                                    <h3 class="card-title h5 mb-0">{{ $articulo->nombre }}</h3>
-                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title h5 mb-0">{{ $articulo->nombre }}</h3>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach
                 </div>
             @endif
         </div>
@@ -390,18 +429,55 @@
                             <div class="col-md-6 mb-3 mb-md-0">
                                 <h3 class="h5 fw-bold">Descripción</h3>
                                 <p class="text-muted">{{ $articuloSeleccionado->descripcion }}</p>
+
+                                <h3 class="h5 fw-bold">Materiales de contruccion</h3>
+                                @if(isset($articuloSeleccionado->materiales) && count($articuloSeleccionado->materiales) > 0)
+                                    <ul class="material-list">
+                                        @foreach ($articuloSeleccionado->materiales as $material)
+                                            <li class="text">{{ $material->nombre }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p class="text">No hay materiales disponibles.</p>
+                                @endif
+                                
                             </div>
                             <div class="col-md-6">
-                                <h3 class="h5 fw-bold">Dimensiones</h3>
+                                <!-- Otras partes de tu vista... -->
+
+                                @if(isset($articuloSeleccionado->numerales) && $articuloSeleccionado->numerales->isNotEmpty())
+                                    <div class="dimensiones-container">
+                                        <div class="d-flex align-items-center mb-2"> <!-- Fila única para título y texto -->
+                                            <h4 class="h5 fw-bold mb-0 me-2">Dimensiones</h4>
+                                            <small class="text-muted">(consulta disponibilidad)</small>
+                                        </div>                                        <div class="dimensiones-list">
+                                            @foreach($articuloSeleccionado->numerales as $numeral)
+                                                <div class="dimension-item">
+                                                    <span class="numeral"><strong>Tamaño#</strong>{{ $numeral->numero }}: </span>
+                                                    <span class="dimensiones">
+                                                        @foreach($numeral->dimensiones as $dimension)
+                                                             {{ $dimension->medida }}:cm
+                                                            @if(!$loop->last) | @endif
+                                                        @endforeach
+                                                    </span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @else
+                                    <p class="no-dimensiones">No hay especificaciones disponibles.</p>
+                                @endif
+
+                                {{-- <h3 class="h5 fw-bold">Dimensiones</h3>
                                 <p class="text-muted">{{ $articuloSeleccionado->dimensiones }}</p>
-                                
+                                 --}}
                                 <h3 class="h5 fw-bold mt-3">Categoría</h3>
                                 <p class="text-muted">{{ $articuloSeleccionado->categoria->nombre }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center border-top-0">
-                        <a href="https://wa.me/573215852059?text=Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}" 
+                        <a href="https://wa.me/573202683321?text=Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}" 
                            class="btn btn-success px-4 py-2"
                            target="_blank">
                             <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
@@ -422,7 +498,7 @@
             <i class="bi bi-instagram fs-5"></i>
         </a>
         {{-- facebook --}}
-        <a href="https://wa.me/573125085577" 
+        <a href="https://wa.me/573202683321" 
            class="social-btn btn-whatsapp"
            target="_blank"
            title="WhatsApp">

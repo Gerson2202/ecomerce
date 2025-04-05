@@ -34,10 +34,13 @@ class ArticuloCreate extends Component
         'numeralsSeleccionados' => 'required|array|min:1',
         'numeralsSeleccionados.*' => 'exists:numerals,id',
     ];
-
+    
     protected $messages = [
         'materialesSeleccionados.required' => 'Debe seleccionar al menos un material.',
         'materialesSeleccionados.min' => 'Debe seleccionar al menos un material.',
+        'numeralsSeleccionados.min' => 'Debe seleccionar al menos un numeral.',
+        'numeralsSeleccionados.required' => 'Debe seleccionar al menos un numeral.',
+
     ];
 
     public function mount()

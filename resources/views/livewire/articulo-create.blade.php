@@ -7,7 +7,7 @@
             <form wire:submit.prevent="save">
                 <div class="form-group">
                     <label>Nombre</label>
-                    <input type="text" wire:model="nombre" class="form-control">
+                    <input type="text" wire:model="nombre" class="form-control" required>
                     @error('nombre') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
     
@@ -23,7 +23,7 @@
     
                 <div class="form-group">
                     <label>Categoría</label>
-                    <select wire:model="categoria_id" class="form-control">
+                    <select wire:model="categoria_id" class="form-control" required>
                         <option value="">Seleccione una categoría</option>
                         @foreach($categorias as $categoria)
                             <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
@@ -54,11 +54,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
                         @foreach($numerals as $numeral)
                             <label class="inline-flex items-center">
+                                <span class="ml-2"># {{ $numeral->numero }}</span>
                                 <input type="checkbox" 
                                     wire:model="numeralsSeleccionados" 
                                     value="{{ $numeral->id }}"
-                                    class="rounded text-blue-600">
-                                <span class="ml-2">Numeral {{ $numeral->numero }}</span>
+                                    class="rounded text-blue-600" >
                             </label>
                         @endforeach
                     </div>

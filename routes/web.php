@@ -6,7 +6,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DimensionController;
 use App\Http\Controllers\MaterialController;
 Route::get('/', function () {
-    return view('welcome');
+    return view('pagina.index');
 });
 
 Route::middleware([

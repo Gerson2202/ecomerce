@@ -5,12 +5,16 @@ namespace App\Livewire;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use Livewire\Component;
+use Livewire\WithPagination; // Importa el trait
 
 class Pagina extends Component
-{
+{    
+    use WithPagination; // Añade esto
     public $categoriaSeleccionada = null;
     public $articuloSeleccionado = null;
     public $mostrarModal = false;
+    public $search = ''; // Nueva propiedad para el buscador
+    public $perPage = 12; // Items por página (ajústalo)
 
     public function render()
     {
@@ -18,7 +22,11 @@ class Pagina extends Component
             ->when($this->categoriaSeleccionada, function ($query) {
                 return $query->where('categoria_id', $this->categoriaSeleccionada);
             })
-            ->get();
+            ->when($this->search, function ($query) {
+                return $query->where('nombre', 'like', '%' . $this->search . '%')
+                             ->orWhere('descripcion', 'like', '%' . $this->search . '%');
+            })
+            ->paginate($this->perPage); // ¡Cambio clave aquí!
 
         $categorias = Categoria::all();
 

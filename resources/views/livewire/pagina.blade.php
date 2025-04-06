@@ -399,17 +399,22 @@
                     </li>
                 </ul>
 
+                
                 <!-- Buscador -->
-                <form class="d-flex search-box" wire:submit.prevent="">
+                <div class="d-flex search-box">
                     <div class="input-group">
-                        <input type="text" class="form-control"
-                               placeholder="Buscar productos..."
-                               wire:model.lazy="search">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Buscar productos..."
+                            wire:model.live.debounce.500ms="search" 
+ 
+                        >
                         <button class="btn btn-outline-primary" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
       </header>
@@ -426,8 +431,8 @@
                          alt="Virgen María">
                          <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                             <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
-                                <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Imágenes religiosas</h2>
-                                <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">"Nadie tiene mayor amor que este"</p>
+                                <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Nacimiento</h2>
+                                <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">"El milagro del Nacimiento, eterno en tu corazón."</p>
                             </div>
                         </div>
                 </div>
@@ -439,8 +444,8 @@
                     alt="Jesús Buen Pastor">
                     <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                         <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
-                            <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Imágenes religiosas</h2>
-                            <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">"Nadie tiene mayor amor que este"</p>
+                            <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Navideñas</h2>
+                            <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">"La magia de la Navidad en tu hogar."</p>
                         </div>
                     </div>
                 </div>
@@ -450,8 +455,8 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Iglesia_Catolica_Apostolica_Ortodoxa_de_la_Santisima_Virgen_Maria_14.JPG/640px-Iglesia_Catolica_Apostolica_Ortodoxa_de_la_Santisima_Virgen_Maria_14.JPG" class="d-block w-100 hero-image" alt="Crucifixión">
                     <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                         <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
-                            <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Imágenes religiosas</h2>
-                            <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">"Nadie tiene mayor amor que este"</p>
+                            <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Esotéricas</h2>
+                            <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">"Arte sacro que inspira y eleva el espíritu."</p>
                         </div>
                     </div>
                 </div>
@@ -460,8 +465,8 @@
                 <div class="carousel-item">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/GustaveDoreParadiseLostSatanProfile.jpg/640px-GustaveDoreParadiseLostSatanProfile.jpg" class="d-block w-100 hero-image" alt="Biblia">
                     <div class="carousel-caption bg-dark bg-opacity-75 rounded p-sm-1 p-1">
-                        <h2 class="fs-6 fs-md-4 fw-bold">Palabra de Dios</h2>
-                        <p>"Lámpara es a mis pies tu palabra" - Salmo 119:105</p>
+                        <h2 class="fs-6 fs-md-4 fw-bold">Religiosas</h2>
+                        <p>"Fe que se moldea, amor que perdura."</p>
                     </div>
                 </div>
             </div>
@@ -485,7 +490,7 @@
                     Nuestros Productos
                 @endif
             </h2>
-
+    
             @if($articulos->isEmpty())
                 <div class="text-center py-5">
                     <div class="alert alert-info">
@@ -493,31 +498,60 @@
                     </div>
                 </div>
             @else
-                <div class="row g-4">
+                <div wire:loading.class="opacity-50" class="transition-opacity duration-300 row g-4">
+
                     @foreach($articulos as $articulo)
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="card h-100 shadow-sm border-0 overflow-hidden">
-                            <!-- Contenedor clickeable que envuelve tanto la imagen como el placeholder -->
-                            <div wire:click="mostrarArticulo({{ $articulo->id }})" class="clickable-area">
-                                @if($articulo->fotos->isNotEmpty())
-                                    <div class="image-container">
-                                        <img src="{{ asset('storage/' . $articulo->fotos->first()->url) }}"
-                                             class="img-fluid contained-image"
-                                             alt="{{ $articulo->nombre }}">
-                                    </div>
-                                @else
-                                    <div class="no-image-placeholder d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-image fs-1 text-muted"></i>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title h5 mb-0">{{ $articulo->nombre }}</h3>
+                        <div class="col-md-6 col-lg-4 col-xl-3">
+                            <div class="card h-100 shadow-sm border-0 overflow-hidden">
+                                <!-- Contenedor clickeable -->
+                                <div wire:click="mostrarArticulo({{ $articulo->id }})" class="clickable-area">
+                                    @if($articulo->fotos->isNotEmpty())
+                                        <div class="image-container">
+                                            <img src="{{ asset('storage/' . $articulo->fotos->first()->url) }}"
+                                                 class="img-fluid contained-image"
+                                                 alt="{{ $articulo->nombre }}">
+                                        </div>
+                                    @else
+                                        <div class="no-image-placeholder d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-image fs-1 text-muted"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title h5 mb-0">{{ $articulo->nombre }}</h3>
+                                </div>
                             </div>
                         </div>
+                    @endforeach
+                    <div class="d-flex justify-content-center gap-3 mt-5">
+                        {{-- Botón "Anterior" --}}
+                        <button 
+                            wire:click="previousPage" 
+                            wire:loading.attr="disabled" 
+                            class="btn btn-outline-primary btn-sm"
+                            @if($articulos->onFirstPage()) disabled @endif
+                        >
+                            &laquo; Anterior
+                        </button>
+                    
+                        {{-- Indicador de página --}}
+                        <span class="align-self-center text-muted small">
+                            Página {{ $articulos->currentPage() }} de {{ $articulos->lastPage() }}
+                        </span>
+                    
+                        {{-- Botón "Siguiente" --}}
+                        <button 
+                            wire:click="nextPage" 
+                            wire:loading.attr="disabled" 
+                            class="btn btn-outline-primary btn-sm"
+                            @if(!$articulos->hasMorePages()) disabled @endif
+                        >
+                            Siguiente &raquo;
+                        </button>
                     </div>
-                @endforeach
                 </div>
+    
+                
             @endif
         </div>
     </section>

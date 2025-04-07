@@ -15,7 +15,6 @@
                         <th>Foto</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Dimensiones</th>
                         <th>Categoría</th>
                         <th>Acciones</th>
                     </tr>
@@ -36,10 +35,9 @@
                         </td>
                         <td>{{ $articulo->nombre }}</td>
                         <td>{{ $articulo->descripcion ?? 'Sin descripción' }}</td>
-                        <td>{{ $articulo->dimensiones ?? 'N/A' }}</td>
                         <td>
                             <span class="badge bg-info">
-                                {{ $articulo->categoria->nombre }}
+                                {{ $articulo->categoria?->nombre ?? 'Sin categoría' }}
                             </span>
                         </td>
                         <td>
@@ -52,10 +50,10 @@
                                         class="btn btn-sm btn-warning" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button onclick="confirmDelete({{ $articulo->id }})" 
+                                {{-- <button onclick="confirmDelete({{ $articulo->id }})" 
                                         class="btn btn-sm btn-danger" title="Eliminar">
                                     <i class="fas fa-trash"></i>
-                                </button>
+                                </button> --}}
                             </div>
                         </td>
                     </tr>
@@ -74,29 +72,41 @@
                     url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
                 },
                 columnDefs: [
-                    { orderable: false, targets: [0, 5] },
-                    { searchable: false, targets: [0, 5] }
+                    { orderable: false, targets: [0, 4] },
+                    { searchable: false, targets: [0, 4] }
                 ]
             });
         });
     
-        function confirmDelete(id) {
+        // Función para mostrar SweetAlert
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: '¿Eliminar artículo?',
+                    text: "Esta acción no se puede deshacer",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Llamar a Livewire con el nuevo formato de Livewire 3
+                        Livewire.dispatch('deleteArticulo', { id: id });
+                    }
+                });
+            }
+
+        // Escuchar eventos de notificación
+        Livewire.on('notify', ({type, message}) => {
             Swal.fire({
-                title: '¿Eliminar artículo?',
-                text: "Esta acción no se puede deshacer",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emit('deleteArticulo', id);
-                }
+                icon: type,
+                title: message,
+                showConfirmButton: false,
+                timer: 3000
             });
-        }
-    
+        });
+        
         document.addEventListener('livewire:load', function() {
             Livewire.on('notify', (data) => {
                 toastr[data.type](data.message);

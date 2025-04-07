@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DimensionController;
 use App\Http\Controllers\MaterialController;
 Route::get('/', function () {
@@ -14,9 +15,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
+ 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Rutas para Artículos
     Route::get('articulos', [ArticuloController::class, 'index'])->name('articulos.index');

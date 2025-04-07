@@ -27,7 +27,6 @@ class ArticuloCreate extends Component
     protected $rules = [
         'nombre' => 'required|string|max:255',
         'descripcion' => 'nullable|string',
-        'dimensiones' => 'nullable|string',
         'categoria_id' => 'required|exists:categorias,id',
         'fotos.*' => 'image|max:2048', // 2MB max
         'materialesSeleccionados' => 'required|array|min:1', // Obligatorio al menos 1 material
@@ -58,7 +57,6 @@ class ArticuloCreate extends Component
         $articulo = Articulo::create([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
-            'dimensiones' => $this->dimensiones,
             'categoria_id' => $this->categoria_id,
         ]);
 
@@ -85,7 +83,6 @@ class ArticuloCreate extends Component
         $this->reset([
             'nombre', 
             'descripcion', 
-            'dimensiones', 
             'categoria_id', 
             'fotos', 
             'materialesSeleccionados',

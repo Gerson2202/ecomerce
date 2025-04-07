@@ -204,10 +204,10 @@
                         <a href="{{ route('articulos.edit', $articulo->id) }}" class="btn btn-warning me-2">
                             <i class="fas fa-edit me-2"></i>Editar
                         </a>
-                        <button class="btn btn-danger" onclick="confirmDelete({{ $articulo->id }})">
+                        {{-- <button class="btn btn-danger" onclick="confirmDelete({{ $articulo->id }})">
                             <i class="fas fa-trash me-2"></i>Eliminar
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

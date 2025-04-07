@@ -452,8 +452,9 @@
 
                 <!-- 3. Crucifixión -->
                 <div class="carousel-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Iglesia_Catolica_Apostolica_Ortodoxa_de_la_Santisima_Virgen_Maria_14.JPG/640px-Iglesia_Catolica_Apostolica_Ortodoxa_de_la_Santisima_Virgen_Maria_14.JPG" class="d-block w-100 hero-image" alt="Crucifixión">
-                    <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
+                    <img src="{{ asset('storage/images/carrusel/2.jpg') }}"
+                    class="d-block w-100 hero-image"
+                    alt="Jesús Buen Pastor">                    <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                         <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
                             <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Esotéricas</h2>
                             <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">"Arte sacro que inspira y eleva el espíritu."</p>
@@ -463,8 +464,9 @@
 
                 <!-- 4. Biblia Abierta -->
                 <div class="carousel-item">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/GustaveDoreParadiseLostSatanProfile.jpg/640px-GustaveDoreParadiseLostSatanProfile.jpg" class="d-block w-100 hero-image" alt="Biblia">
-                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-sm-1 p-1">
+                    <img src="{{ asset('storage/images/carrusel/3.jpg') }}"
+                    class="d-block w-100 hero-image"
+                    alt="Jesús Buen Pastor">                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-sm-1 p-1">
                         <h2 class="fs-6 fs-md-4 fw-bold">Religiosas</h2>
                         <p>"Fe que se moldea, amor que perdura."</p>
                     </div>
@@ -656,12 +658,14 @@
                             <div class="col-md-6">
                                 <!-- Otras partes de tu vista... -->
 
-                                @if(isset($articuloSeleccionado->numerales) && $articuloSeleccionado->numerales->isNotEmpty())
                                     <div class="dimensiones-container">
                                         <div class="d-flex align-items-center mb-2"> <!-- Fila única para título y texto -->
                                             <h4 class="h5 fw-bold mb-0 me-2">Dimensiones</h4>
                                             <small class="text-muted">(consulta disponibilidad)</small>
-                                        </div>                                        <div class="dimensiones-list">
+                                        </div>  
+                                        @if(isset($articuloSeleccionado->numerales) && $articuloSeleccionado->numerales->isNotEmpty())
+                                    
+                                        <div class="dimensiones-list">
                                             @foreach($articuloSeleccionado->numerales as $numeral)
                                                 <div class="dimension-item">
                                                     <span class="numeral"><strong>#{{ $numeral->numero }}:</strong> </span>

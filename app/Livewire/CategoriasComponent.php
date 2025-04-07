@@ -60,25 +60,35 @@ class CategoriasComponent extends Component
     public function delete($id)
     {
         try {
-            if (Categoria::find($id)?->delete()) {
-                $this->dispatch('notify',
-                    type: 'success',
-                    message: 'Categoría eliminada'
-                );
-            } else {
+            $categoria = Categoria::withCount('articulos')->find($id);
+    
+            if (!$categoria) {
                 $this->dispatch('notify',
                     type: 'error',
-                    message: 'Categoría no encontrada'
+                    message: '⚠️ Categoría no encontrada'
+                );
+                return;
+            }
+    
+            if ($categoria->articulos_count > 0) {
+                $this->dispatch('notify',
+                    type: 'warning',
+                    message: '❌ No se puede eliminar - Tiene '.$categoria->articulos_count.' artículo(s) asociado(s)'
+                );
+                return;
+            }
+    
+            if ($categoria->delete()) {
+                $this->dispatch('notify',
+                    type: 'success',
+                    message: '✅ Categoría eliminada correctamente'
                 );
             }
+    
         } catch (\Exception $e) {
-            $message = ($e->getCode() == 23000) 
-                ? 'No se puede eliminar (tiene articulos asociados)' 
-                : 'Error al eliminar';
-                
             $this->dispatch('notify',
                 type: 'error',
-                message: $message
+                message: '⛔ Error inesperado: '.$e->getMessage()
             );
         }
     }

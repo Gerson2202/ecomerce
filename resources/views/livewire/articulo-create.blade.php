@@ -15,12 +15,6 @@
                     <label>Descripción</label>
                     <textarea wire:model="descripcion" class="form-control" rows="3"></textarea>
                 </div>
-    
-                <div class="form-group">
-                    <label>Dimensiones</label>
-                    <input type="text" wire:model="dimensiones" class="form-control" required>
-                </div>
-    
                 <div class="form-group">
                     <label>Categoría</label>
                     <select wire:model="categoria_id" class="form-control" required>
@@ -113,9 +107,19 @@
                         {{ count($fotos) }} {{ Str::plural('foto', count($fotos)) }} seleccionadas
                     </div>
                 </div>
-    
-                <button type="submit" class="btn btn-primary mt-3">Guardar Artículo</button>
-            </form>
+                
+                
+                
+                <div class="flex gap-3 mt-3">                    
+                    <button type="submit" class="btn btn-primary flex-1">
+                        Guardar Artículo
+                    </button>
+                    <a href="{{ route('articulos.index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Volver al listado
+                    </a>
+                   
+                </div>           
+             </form>
         </div>
     </div>
     

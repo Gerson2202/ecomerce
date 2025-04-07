@@ -3,16 +3,23 @@
 namespace App\Livewire;
 
 use App\Models\Articulo;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\WithPagination;
+use Livewire\Attributes\On;
 
 class ArticulosComponent extends Component
 {
-    public function render()
+    // Escucha el evento de eliminación
+    #[On('deleteArticulo')]
+    public function confirmDelete($id)
     {
-        return view('livewire.articulos-component', [
-            'articulos' => Articulo::with(['categoria', 'fotos', 'materiales'])->get()
-        ]);
+       
+       
+            Articulo::findOrFail($id)->delete();
+            $this->dispatch('notify', type: 'success', message: 'Dimensión eliminada correctamente');
+      
+            // $this->dispatch('refreshDatatable');
+       
     }
 
     public function edit($id)
@@ -25,8 +32,10 @@ class ArticulosComponent extends Component
         return redirect()->route('articulos.show', $id);
     }
 
-    public function deleteConfirm($id)
+    public function render()
     {
-        $this->dispatch('confirmDelete', id: $id);
+        return view('livewire.articulos-component', [
+            'articulos' => Articulo::with(['categoria', 'fotos', 'materiales'])->get()
+        ]);
     }
 }

@@ -19,13 +19,6 @@
                 <label>Descripción</label>
                 <textarea wire:model="descripcion" class="form-control" rows="3"></textarea>
             </div>
-
-            <!-- Dimensiones -->
-            <div class="form-group">
-                <label>Dimensiones</label>
-                <input type="text" wire:model="dimensiones" class="form-control">
-            </div>
-
             <!-- Categoría -->
             <div class="form-group">
                 <label>Categoría</label>
@@ -133,6 +126,10 @@
             </div>
 
             <div class="form-group mt-4">
+                
+                <a href="{{ route('articulos.index') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Volver al listado
+                </a>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save mr-2"></i>Guardar Cambios
                 </button>

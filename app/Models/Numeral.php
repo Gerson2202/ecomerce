@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 class Numeral extends Model
 {
-    protected $fillable = ['numero'];
+    use HasFactory; // ¡Esta línea es crucial!
     
+
+    protected $fillable = ['numero'];
     public function articulos(): BelongsToMany
     {
         return $this->belongsToMany(Articulo::class)

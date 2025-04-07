@@ -18,7 +18,6 @@ class ArticuloEdit extends Component
     public $articulo_id;
     public $nombre;
     public $descripcion;
-    public $dimensiones;
     public $categoria_id;
     public $materialesSeleccionados = []; // Array para checkboxes
     public $numeralesSeleccionados = []; // Array para checkboxes
@@ -32,7 +31,6 @@ class ArticuloEdit extends Component
     protected $rules = [
         'nombre' => 'required|string|max:255',
         'descripcion' => 'nullable|string',
-        'dimensiones' => 'nullable|string',
         'categoria_id' => 'required|exists:categorias,id',
         'fotos.*' => 'image|max:2048',
         'materialesSeleccionados' => 'required|array|min:1',
@@ -47,7 +45,6 @@ class ArticuloEdit extends Component
         $this->articulo_id = $articulo->id;
         $this->nombre = $articulo->nombre;
         $this->descripcion = $articulo->descripcion;
-        $this->dimensiones = $articulo->dimensiones;
         $this->categoria_id = $articulo->categoria_id;
         $this->fotosExistentes = $articulo->fotos;
         $this->materialesSeleccionados = $articulo->materiales->pluck('id')->toArray(); // IDs iniciales
@@ -66,7 +63,6 @@ class ArticuloEdit extends Component
     $articulo->update([
         'nombre' => $this->nombre,
         'descripcion' => $this->descripcion,
-        'dimensiones' => $this->dimensiones,
         'categoria_id' => $this->categoria_id,
     ]);
 

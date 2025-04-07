@@ -97,7 +97,7 @@ class GestionNumeralesDimensiones extends Component
             $this->dispatch('notify', type: 'success', message: 'Numeral eliminado correctamente');
             $this->numeralSeleccionado = null;
         } catch (\Exception $e) {
-            $this->dispatch('notify', type: 'error', message: 'Error al eliminar numeral: ' . $e->getMessage());
+            $this->dispatch('notify', type: 'error', message: 'Error al eliminar numeral: El numeral esta siendo usando en articulos');
         }
     }
 

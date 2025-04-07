@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+
     <div class="container-fluid">
         @livewire('articulo.show-detalle', ['id' => $articulo->id])
         {{-- @livewire('articulo-edit', ['articuloId' => $articulo->id]) --}}
@@ -17,6 +18,24 @@
 
 @section('css')
     <!-- Bootstrap 5 -->
+    <style>
+        /* Elimina márgenes/padding del container-fluid solo en móviles */
+        @media (max-width: 767px) {
+            .container-fluid {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+            
+            /* Opcional: Asegura que las tablas u otros elementos hijos no causen scroll horizontal */
+            .container-fluid > .row,
+            .container-fluid > .dataTables_wrapper {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Toastr -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">

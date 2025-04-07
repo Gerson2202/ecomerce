@@ -67,15 +67,28 @@
     <script>
         $(document).ready(function() {
             $('#articulos-table').DataTable({
-                responsive: true,
+            responsive: true,
+                dom: 
+                    "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                pagingType: "simple",
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
+                    paginate: {
+                        next: '→',
+                        previous: '←'
+                    }
                 },
-                columnDefs: [
-                    { orderable: false, targets: [0, 4] },
-                    { searchable: false, targets: [0, 4] }
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: 'Exportar',
+                        buttons: ['copy', 'csv', 'excel', 'pdf'],
+                        className: 'btn-sm'
+                    }
                 ]
-            });
+             });
         });
     
         // Función para mostrar SweetAlert

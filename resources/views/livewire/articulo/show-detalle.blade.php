@@ -22,20 +22,22 @@
                         <!-- Galería de miniaturas - Versión simplificada -->
                         <div class="row g-3">
                             @foreach($fotos as $foto)
-                                <div class="col-md-4 col-lg-3">
-                                    <div class="card h-100 border-0 shadow-sm">
+                            <div class="col-md-4 col-lg-3 mb-4">
+                                <div class="card h-100 border-0 shadow-sm" style="height: 300px;"> <!-- Altura fija -->
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 250px; overflow: hidden;"> <!-- Contenedor para la imagen -->
                                         <img 
                                             src="{{ asset('storage/' . $foto->url) }}" 
-                                            class="card-img-top img-fluid cursor-pointer" 
+                                            class="img-fluid mw-100 mh-100" 
                                             alt="{{ $foto->descripcion }}"
-                                            style="height: 200px; object-fit: cover;"
+                                            style="object-fit: contain; width: auto; height: auto; max-width: 100%; max-height: 100%;"
                                             onclick="openLightbox('{{ asset('storage/' . $foto->url) }}', '{{ $foto->descripcion }}')"
                                         >
-                                        <div class="card-body text-center">
-                                            <small class="text-muted">{{ $foto->descripcion }}</small>
-                                        </div>
+                                    </div>
+                                    <div class="card-body text-center" style="height: 100px; overflow: auto;"> <!-- Altura fija para el texto -->
+                                        <small class="text-muted">{{ $foto->descripcion }}</small>
                                     </div>
                                 </div>
+                            </div>
                             @endforeach
                         </div>
 

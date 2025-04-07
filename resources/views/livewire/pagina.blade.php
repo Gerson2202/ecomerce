@@ -426,9 +426,8 @@
             <div class="carousel-inner">
                 <!-- 1. Virgen María -->
                 <div class="carousel-item active">
-                    <img src="{{ asset('storage/images/carrusel/comunidad-parroquia.jpg') }}"
-                         class="d-block w-100 hero-image"
-                         alt="Virgen María">
+                    <img src="{{ asset('storage/images/carrusel/3.jpg') }}"
+                         class="d-block w-100 hero-image">
                          <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                             <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
                                 <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">Nacimiento</h2>
@@ -464,7 +463,7 @@
 
                 <!-- 4. Biblia Abierta -->
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/images/carrusel/3.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/4.jpg') }}"
                     class="d-block w-100 hero-image"
                     alt="Jesús Buen Pastor">                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-sm-1 p-1">
                         <h2 class="fs-6 fs-md-4 fw-bold">Religiosas</h2>
@@ -484,7 +483,7 @@
 
     <!-- Sección de Artículos -->
     <section class="py-5 bg-light">
-        <div class="container">
+        <div class="container" id="articulos-container">
             <h2 class="text-center mb-5 fw-bold">
                 @if($categoriaSeleccionada)
                     {{ $categorias->find($categoriaSeleccionada)->nombre }}
@@ -527,12 +526,14 @@
                     @endforeach
                     <div class="d-flex justify-content-center gap-3 mt-5">
                         {{-- Botón "Anterior" --}}
+                        <!-- Botón "Anterior" -->
                         <button 
                             wire:click="previousPage" 
                             wire:loading.attr="disabled" 
                             class="btn btn-outline-primary btn-sm"
                             @if($articulos->onFirstPage()) disabled @endif
-                        >
+                            onclick="setTimeout(() => document.getElementById('articulos-container').scrollIntoView({ behavior: 'smooth' }), 100)"
+                            >
                             &laquo; Anterior
                         </button>
                     
@@ -541,15 +542,18 @@
                             Página {{ $articulos->currentPage() }} de {{ $articulos->lastPage() }}
                         </span>
                     
-                        {{-- Botón "Siguiente" --}}
+                     <!-- Botón "Siguiente" -->
                         <button 
                             wire:click="nextPage" 
                             wire:loading.attr="disabled" 
                             class="btn btn-outline-primary btn-sm"
                             @if(!$articulos->hasMorePages()) disabled @endif
+                            onclick="setTimeout(() => document.getElementById('articulos-container').scrollIntoView({ behavior: 'smooth' }), 100)"
                         >
                             Siguiente &raquo;
                         </button>
+
+
                     </div>
                 </div>
     
@@ -692,14 +696,14 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center border-top-0">
-                        <a href="https://wa.me/573202683321?text=Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
+                        <a href="https://wa.me/573202683321?text=Hola%20Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
                            class="btn btn-success px-4 py-2"
                            target="_blank">
                             <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
                             <span class="flag">🇨🇴</span> <!-- Emoji bandera Colombia -->
 
                         </a>
-                        <a href="https://wa.me/584161346677?text=Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
+                        <a href="https://wa.me/584161346677?text=Hola%20Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
                             class="btn btn-success px-4 py-2"
                             target="_blank">
                              <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp

@@ -46,7 +46,7 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button 
-                                            class="btn btn-sm btn-outline-danger disabled"
+                                            class="btn btn-sm btn-outline-danger "
                                             onclick="confirm('¿Eliminar este numeral?') || event.stopImmediatePropagation()"
                                             wire:click="eliminarNumeral({{ $numeral->id }})"
                                         >

@@ -9,12 +9,30 @@ use Livewire\WithPagination; // Importa el trait
 
 class Pagina extends Component
 {    
-    use WithPagination; // Añade esto
+    use WithPagination;
+    
     public $categoriaSeleccionada = null;
     public $articuloSeleccionado = null;
     public $mostrarModal = false;
-    public $search = ''; // Nueva propiedad para el buscador
-    public $perPage = 12; // Items por página (ajústalo)
+    public $search = '';
+    public $perPage = 12;
+    
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'categoriaSeleccionada' => ['except' => ''],
+    ];
+
+    // Resetear página cuando cambia la búsqueda
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+    
+    // Resetear página cuando cambia la categoría
+    public function updatedCategoriaSeleccionada()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -23,10 +41,12 @@ class Pagina extends Component
                 return $query->where('categoria_id', $this->categoriaSeleccionada);
             })
             ->when($this->search, function ($query) {
-                return $query->where('nombre', 'like', '%' . $this->search . '%')
-                             ->orWhere('descripcion', 'like', '%' . $this->search . '%');
+                return $query->where(function($q) {
+                    $q->where('nombre', 'like', '%' . $this->search . '%')
+                      ->orWhere('descripcion', 'like', '%' . $this->search . '%');
+                });
             })
-            ->paginate($this->perPage); // ¡Cambio clave aquí!
+            ->paginate($this->perPage);
 
         $categorias = Categoria::all();
 
@@ -39,6 +59,7 @@ class Pagina extends Component
     public function seleccionarCategoria($categoriaId)
     {
         $this->categoriaSeleccionada = $categoriaId;
+        $this->resetPage(); // También reseteamos la página aquí
     }
 
     public function mostrarArticulo($articuloId)

@@ -2,7 +2,7 @@
 @section('title', 'Dashboard') <!-- Corregí "Dasboard" a "Dashboard" -->
 
 @section('content_header')
-   <h1>Dashboard</h1>
+   <h1 class="ml-3">Dashboard</h1>
    @livewireStyles
     <!-- Agrega los estilos de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <div class="col-lg-4 col-6 d-flex">
             <div class="small-box bg-info w-100 d-flex flex-column">
                 <div class="inner flex-grow-1">
-                    <p>Artículos</p>
+                    <p># Artículos</p>
                     <h3>{{ $totalArticulos }}</h3>           
                 </div>
                 <div class="icon">
@@ -31,8 +31,8 @@
         <div class="col-lg-4 col-6 d-flex">
             <div class="small-box bg-success w-100 d-flex flex-column">
                 <div class="inner flex-grow-1">
-                    <p>Categorías</p>
-                    <h3>{{ $totalCategorias }}<sup style="font-size: 20px">%</sup></h3>           
+                    <p> # Categorías</p>
+                    <h3>{{ $totalCategorias }}</h3>           
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>

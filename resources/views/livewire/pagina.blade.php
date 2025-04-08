@@ -3,6 +3,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
+    <style>
+        .oval-container {
+            border-radius: 100px !important; /* Ovalado extremo */
+            overflow: hidden;
+            background: white; /* Fondo por si la imagen es transparente */
+        }
+        
+        .oval-image {
+            object-fit: contain !important; /* Fuerza que la imagen entera sea visible */
+        }
+    </style>
     {{-- Stilos para los iconos --}}
     <style>
         /* Estilos para las banderas */
@@ -329,10 +340,15 @@
       <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand fw-bold text-primary" href="{{route ('dashboard')}}">
-                <i class="bi bi-shop me-2"></i>Mi Tienda
+            <a class="navbar-brand oval-container d-flex justify-content-center align-items-center shadow" 
+                href="{{route('dashboard')}}"
+                style="width: 130px; height: 45px;">
+                
+                <img src="{{ asset('storage/images/logo/4.jpg') }}" 
+                        alt="Mi Tienda" 
+                    class="h-100 w-auto oval-image">
             </a>
-
+             
             <!-- Botón para móviles -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>

@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Santa Barbara',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,13 +63,12 @@ return [
     |
     */
 
-    
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Santa</b>Barbara',
+    'logo_img' => 'storage/images/logo/logo.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
-    
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'storage/images/logo/logo.jpg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -109,12 +108,12 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Basic-Configuration
     |
     */
-
+    
     'preloader' => [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'storage/images/logo/logo.jpg',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -332,18 +331,17 @@ return [
     ],
 
       // BOTÓN PARA NUMERALES Y DIMENSIONES
-    [
+      [
         'text'  => 'Dimensiones',
-        'icon'  => 'fas fa-tags',
+        'icon'  => 'fas fa-ruler-combined',
         'route' => 'dimensiones.index',
     ],
 
     [
         'text'  => 'Vista de cliente',
-        'icon'  => 'fas fa-tags',
+        'icon'  => 'fas fa-eye',
         'route' => 'pagina.index',
     ],
-    
 ],
 
 

@@ -17,7 +17,7 @@
             <div class="small-box bg-info w-100 d-flex flex-column">
                 <div class="inner flex-grow-1">
                     <p># Artículos</p>
-                    <h3>{{ $totalArticulos }}</h3>           
+                    <h3>{{ $totalArticulos?? 'Sin articulos' }}</h3>           
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -48,15 +48,23 @@
                 <div class="inner flex-grow-1">
                     <div class="d-flex align-items-center mb-2">
                         <span class="badge bg-primary me-2">NUEVO</span>
-                        <h6 class="mb-0 fw-bold text-dark">{{ Str::limit($ultimoArticulo->nombre, 30) }}</h6>
-                    </div>
+                        <h6 class="mb-0 fw-bold text-dark">
+                            {{ $ultimoArticulo ? Str::limit($ultimoArticulo->nombre, 30) : 'Sin artículos' }}
+                        </h6>                    </div>
                     <p>Último artículo registrado</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="{{ route('articulos.show', $ultimoArticulo->id) }}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+                @if($ultimoArticulo)
+                <a href="{{ route('articulos.show', $ultimoArticulo->id) }}" class="small-box-footer">
+                    Más info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @else
+                <a href="#" class="small-box-footer text-muted" style="cursor: not-allowed;">
+                    Más info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endif            </div>
         </div>
         <!-- ./col -->
       </div>

@@ -6,6 +6,7 @@ use App\Models\Articulo;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\DB;
 
 class ArticulosComponent extends Component
 {
@@ -13,12 +14,42 @@ class ArticulosComponent extends Component
     #[On('deleteArticulo')]
     public function confirmDelete($id)
     {
-       
-       
-            Articulo::findOrFail($id)->delete();
-            $this->dispatch('notify', type: 'success', message: 'Dimensión eliminada correctamente');
-      
-            // $this->dispatch('refreshDatatable');
+        DB::beginTransaction();
+
+    try {
+        $articulo = Articulo::with(['fotos', 'materiales', 'numerales', 'articuloNumerales'])->findOrFail($id);
+
+        // Eliminar archivos físicos de las fotos
+        foreach ($articulo->fotos as $foto) {
+            $filePath = "articulos/" . basename($foto->url); // Ejemplo: "articulos/imagen.jpg"
+            
+            // Eliminar de storage (apunta a public/storage/articulos)
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
+            }
+        }
+
+        // Eliminar relaciones
+        $articulo->materiales()->detach();
+        $articulo->numerales()->detach();
+        $articulo->articuloNumerales()->delete();
+        $articulo->fotos()->delete();
+
+        // Eliminar el artículo
+        $articulo->delete();
+
+        DB::commit();
+
+        return redirect()->route('articulos.index')
+            ->with('success', 'Artículo y sus imágenes eliminados correctamente.');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->back()
+            ->with('error', 'Error al eliminar: ' . $e->getMessage());
+    }
+          
+           
        
     }
 

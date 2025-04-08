@@ -3,6 +3,24 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Artículos Registrados</h3>
+                {{-- Mostrar mensajes de éxito/error --}}
+                    @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>¡Éxito!</strong> {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>¡Error!</strong> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                 <a href="{{ route('articulos.create') }}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus mr-1"></i> Nuevo Artículo
                 </a>
@@ -50,10 +68,10 @@
                                         class="btn btn-sm btn-warning" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                {{-- <button onclick="confirmDelete({{ $articulo->id }})" 
+                               {{-- <button onclick="confirmDelete({{ $articulo->id }})" 
                                         class="btn btn-sm btn-danger" title="Eliminar">
                                     <i class="fas fa-trash"></i>
-                                </button> --}}
+                                </button>  --}}
                             </div>
                         </td>
                     </tr>

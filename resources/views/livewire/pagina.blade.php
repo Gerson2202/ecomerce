@@ -341,7 +341,7 @@
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand oval-container d-flex justify-content-center align-items-center shadow" 
-                href="{{route('dashboard')}}"
+                href="#"
                 style="width: 130px; height: 45px;">
                 
                 <img src="{{ asset('storage/images/logo/2.jpg') }}" 

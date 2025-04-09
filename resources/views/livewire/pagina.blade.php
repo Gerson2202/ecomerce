@@ -428,7 +428,7 @@
             <div class="carousel-inner">
                 <!-- 1. Virgen María -->
                 <div class="carousel-item active">
-                    <img src="{{ asset('storage/images/carrusel/3.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/nacimiento.jpg') }}"
                          class="d-block w-100 hero-image">
                          <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                             <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
@@ -440,7 +440,7 @@
 
                 <!-- 2. Jesús Buen Pastor -->
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/images/carrusel/1.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/navidenas.jpg') }}"
                     class="d-block w-100 hero-image"
                     alt="Jesús Buen Pastor">
                     <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
@@ -453,7 +453,7 @@
 
                 <!-- 3. Crucifixión -->
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/images/carrusel/2.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/esotericas.jpg') }}"
                     class="d-block w-100 hero-image"
                     alt="Jesús Buen Pastor">                    <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                         <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
@@ -464,12 +464,16 @@
                 </div>
 
                 <!-- 4. Biblia Abierta -->
+                <!-- 3. Crucifixión -->
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/images/carrusel/4.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/religiosas.jpg') }}"
                     class="d-block w-100 hero-image"
-                    alt="Jesús Buen Pastor">                    <div class="carousel-caption bg-dark bg-opacity-75 rounded p-sm-1 p-1">
-                        <h2 class="fs-6 fs-md-4 fw-bold">Religiosas</h2>
-                        <p>"Fe que se moldea, amor que perdura."</p>
+                    alt="Jesús Buen Pastor">                    
+                    <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
+                        <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
+                            <h2 class="fs-6 fs-md-4 fw-bold mb-0" style="word-spacing: -1px; letter-spacing: -0.5px;">religiosas</h2>
+                            <p class="m-0 d-sm-block fs-7 fs-md-6" style="word-spacing: -0.5px;">""Fe que se moldea, amor que perdura."</p>
+                        </div>
                     </div>
                 </div>
             </div>

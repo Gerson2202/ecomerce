@@ -344,7 +344,7 @@
                 href="{{route('dashboard')}}"
                 style="width: 130px; height: 45px;">
                 
-                <img src="{{ asset('storage/images/logo/4.jpg') }}" 
+                <img src="{{ asset('storage/images/logo/2.jpg') }}" 
                         alt="Mi Tienda" 
                     class="h-100 w-auto oval-image">
             </a>
@@ -364,20 +364,6 @@
                             <i class="bi bi-house"></i>Inicio
                         </a>
                     </li>
-
-                    <!-- Menú desplegable de Productos -->
-                    {{-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-grid"></i>Productos
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-star"></i> Nuevos</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-tag"></i> Ofertas</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-collection"></i> Todos</a></li>
-                        </ul>
-                    </li> --}}
-
                     <!-- Selector de Categorías (integrado) -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown">

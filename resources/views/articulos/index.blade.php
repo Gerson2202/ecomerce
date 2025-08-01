@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Lista de artículos</h1>
+        <h1 class="ml-2">Lista de artículos</h1>
     </div>
 @stop
 

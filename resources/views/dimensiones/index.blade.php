@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Dimensiones</h1>
+        <h1 class="ml-3">Dimensiones</h1>
         <button class="btn btn-outline-primary" onclick="window.location.reload()">
             <i class="fas fa-sync-alt"></i> Actualizar
         </button>

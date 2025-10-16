@@ -16,12 +16,21 @@ class Pagina extends Component
     public $mostrarModal = false;
     public $search = '';
     public $perPage = 12;
+    public $mostrarTodasDimensiones = false;
+
     
     protected $queryString = [
         'search' => ['except' => ''],
         'categoriaSeleccionada' => ['except' => ''],
     ];
 
+
+    public function toggleDimensiones()
+    {
+        $this->mostrarTodasDimensiones = !$this->mostrarTodasDimensiones;
+    }
+
+   
     // Resetear página cuando cambia la búsqueda
     public function updatedSearch()
     {
@@ -72,5 +81,7 @@ class Pagina extends Component
     {
         $this->mostrarModal = false;
         $this->articuloSeleccionado = null;
+        $this->mostrarTodasDimensiones = false; // Resetear al cerrar
+
     }
 }

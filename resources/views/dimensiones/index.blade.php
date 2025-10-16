@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Gestión de Numerales y Dimensiones')
+@section('title', 'Gestion de Numerales y Dimensiones')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center mb-2">

@@ -337,25 +337,23 @@
 
     <!-- Header -->
       <!-- Header Unificado -->
-      <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
-            <!-- Logo -->
-            <a class="navbar-brand oval-container d-flex justify-content-center align-items-center shadow" 
-                href="#"
-                style="width: 130px; height: 45px;">
-                
-                <img src="{{ asset('storage/images/logo/2.jpg') }}" 
-                        alt="Mi Tienda" 
-                    class="h-100 w-auto oval-image">
+            <!-- Logo - Cambios aquí -->
+            <a href="#" class="d-block order-lg-2 ms-lg-auto" style="width: 130px; height: 55px;">
+                <img src="{{ asset('storage/images/logo/4.png') }}" 
+                    alt="Mi Tienda" 
+                    class="h-100 w-auto rounded-circle shadow" 
+                    style="object-fit: contain;">
             </a>
-             
-            <!-- Botón para móviles -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            
+            <!-- Botón para móviles - Añadí order-lg-1 -->
+            <button class="navbar-toggler order-lg-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Contenido del navbar -->
-            <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Contenido del navbar - Añadí order-lg-3 -->
+            <div class="collapse navbar-collapse order-lg-3" id="navbarContent">
                 <!-- Menú principal unificado -->
                 <ul class="navbar-nav me-auto">
                     <!-- Ítem de Inicio -->
@@ -410,7 +408,6 @@
                             class="form-control"
                             placeholder="Buscar productos..."
                             wire:model.live.debounce.500ms="search" 
- 
                         >
                         <button class="btn btn-outline-primary" type="submit">
                             <i class="bi bi-search"></i>
@@ -419,7 +416,7 @@
                 </div>
             </div>
         </div>
-      </header>
+    </header>
 
     <!-- Hero con Carrusel -->
     <section class="mb-5">

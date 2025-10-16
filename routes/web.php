@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DimensionController;
 use App\Http\Controllers\MaterialController;
+use Illuminate\Support\Facades\Artisan;
+
 Route::get('/', function () {
     return view('pagina.index');
 });
@@ -43,7 +45,9 @@ Route::middleware([
     Route::get('/dimensiones', [DimensionController::class, 'index'])->name('dimensiones.index');
 
 
-    Route::get('/pagina', function () {
+    Route::get('/inicio', function () {
         return view('pagina.index');
     })->name('pagina.index');
+
+
 });

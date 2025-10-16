@@ -5,6 +5,7 @@ use App\Models\Dimension;
 use App\Models\Numeral;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Validation\ValidationException;
 
 class GestionNumeralesDimensiones extends Component
 {
@@ -17,6 +18,7 @@ class GestionNumeralesDimensiones extends Component
     public $editMedida;
     public $editDimensionId;
     public $page = 1;
+    public $nombreNumeral;
 
     protected $rules = [
         'numero' => 'required|integer|unique:numerals,numero',
@@ -33,7 +35,8 @@ class GestionNumeralesDimensiones extends Component
     public function seleccionarNumeral($numeralId)
     {
         $this->numeralSeleccionado = $numeralId;
-        $this->dispatch('notify', type: 'info', message: 'Numeral seleccionado');
+        $numero = Numeral::find($numeralId);
+        $this->nombreNumeral= $numero->numero;     
     }
 
     public function guardarNumeral()
@@ -76,19 +79,42 @@ class GestionNumeralesDimensiones extends Component
         $this->dispatch('mostrarModal', modal: '#editNumeralModal');
     }
 
+
     public function actualizarNumeral()
     {
-        $this->validate(['editNumero' => 'required|integer|unique:numerals,numero,'.$this->numeralSeleccionado]);
-
         try {
-            Numeral::find($this->numeralSeleccionado)->update(['numero' => $this->editNumero]);
-            $this->dispatch('notify', type: 'success', message: 'Numeral actualizado correctamente');
+            // Validar en español
+            $this->validate([
+                'editNumero' => [
+                    'required',
+                    'integer',  
+                    'unique:numerals,numero,' . $this->numeralSeleccionado,
+                ],
+            ], [
+                // Mensajes personalizados
+                'editNumero.required' => 'El número es obligatorio.',
+                'editNumero.integer' => 'El número debe ser un valor numérico.',
+                'editNumero.unique' => 'Este número ya existe en el sistema.',
+            ]);
+
+            // Actualizar el numeral
+            Numeral::find($this->numeralSeleccionado)->update([
+                'numero' => $this->editNumero,
+            ]);
+
+            // Notificar éxito y cerrar modal
+            $this->dispatch('notify', type: 'success', message: 'Numeral actualizado correctamente.');
             $this->dispatch('cerrarModal', modal: '#editNumeralModal');
             $this->reset(['editNumero']);
+        } catch (ValidationException $e) {
+            // Capturar el primer error y mostrarlo con Toastr
+            $mensaje = collect($e->validator->errors()->all())->first();
+            $this->dispatch('notify', type: 'error', message: $mensaje);
         } catch (\Exception $e) {
-            $this->dispatch('notify', type: 'error', message: 'Error al actualizar numeral: ' . $e->getMessage());
+            $this->dispatch('notify', type: 'error', message: 'Ocurrió un error: ' . $e->getMessage());
         }
     }
+
 
     public function eliminarNumeral($numeralId)
     {
@@ -109,19 +135,48 @@ class GestionNumeralesDimensiones extends Component
         $this->dispatch('mostrarModal', modal: '#editDimensionModal');
     }
 
-    public function actualizarDimension()
+   public function actualizarDimension()
     {
-        $this->validate(['editMedida' => 'required|string|max:255']);
-
         try {
-            Dimension::find($this->editDimensionId)->update(['medida' => $this->editMedida]);
+            // Validación con mensajes personalizados
+            $validated = $this->validate(
+                [
+                    'editMedida' => 'required|string|max:255',
+                ],
+                [
+                    'editMedida.required' => 'El campo medida es obligatorio.',
+                    'editMedida.string'   => 'El campo medida debe ser un texto válido.',
+                    'editMedida.max'      => 'El campo medida no puede tener más de 255 caracteres.',
+                ]
+            );
+
+            // Buscar la dimensión
+            $dimension = Dimension::find($this->editDimensionId);
+
+            if (!$dimension) {
+                throw new \Exception("No se encontró la dimensión con ID {$this->editDimensionId}");
+            }
+
+            // Actualizar
+            $dimension->update([
+                'medida' => $this->editMedida,
+            ]);
+
+            // Éxito
             $this->dispatch('notify', type: 'success', message: 'Dimensión actualizada correctamente');
             $this->dispatch('cerrarModal', modal: '#editDimensionModal');
             $this->reset(['editMedida', 'editDimensionId']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Captura errores de validación y muestra el primero
+            $mensaje = collect($e->validator->errors()->all())->first();
+            $this->dispatch('notify', type: 'error', message: $mensaje);
         } catch (\Exception $e) {
+            // Otros errores
             $this->dispatch('notify', type: 'error', message: 'Error al actualizar dimensión: ' . $e->getMessage());
         }
     }
+
+
 
     public function eliminarDimension($dimensionId)
     {

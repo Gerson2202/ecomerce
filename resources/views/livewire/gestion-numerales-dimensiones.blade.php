@@ -95,6 +95,7 @@
                                     type="text" 
                                     placeholder="Nueva dimensión" 
                                     class="form-control"
+                                    required
                                 >
                                 <button 
                                     wire:click="guardarDimension" 
@@ -103,6 +104,14 @@
                                     <i class="fas fa-plus"></i> Agregar
                                 </button>
                             </div>
+                            <div class="alert alert-success d-inline-flex align-items-center py-1 px-1 rounded-pill shadow-sm">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <span>
+                                    <strong>Numeral seleccionado:</strong>
+                                    <span class="fw-bold text-dark">{{ $nombreNumeral }}</span>
+                                </span>
+                            </div>
+                            <hr>    
                             
                             @if($currentNumeral->dimensiones->count() > 0)
                                 <div class="list-group">
@@ -169,6 +178,8 @@
                             wire:model="editNumero" 
                             type="number" 
                             class="form-control"
+                            oninput="this.value = Math.abs(this.value) > 20 ? 20 : Math.abs(this.value)"
+
                         >
                     </div>
                 </div>
@@ -218,21 +229,6 @@
         </div>
     </div>
 </div>
+ 
 
-@push('scripts')
-<script>
-    document.addEventListener('livewire:init', () => {
-        // Mostrar modales
-        Livewire.on('mostrarModal', (data) => {
-            const modal = new bootstrap.Modal(document.querySelector(data.modal));
-            modal.show();
-        });
 
-        // Cerrar modales
-        Livewire.on('cerrarModal', (data) => {
-            const modal = bootstrap.Modal.getInstance(document.querySelector(data.modal));
-            if (modal) modal.hide();
-        });
-    });
-</script>
-@endpush

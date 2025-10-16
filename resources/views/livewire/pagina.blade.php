@@ -3,15 +3,41 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
+    {{-- Stilos logo --}}
     <style>
-        .oval-container {
-            border-radius: 100px !important; /* Ovalado extremo */
+        /* Contenedor ovalado */
+        .logo-wrapper {
+            width: 90px;        /* tamaño inicial */
+            height: auto;
+            border-radius: 50%; /* ovalado */
             overflow: hidden;
-            background: white; /* Fondo por si la imagen es transparente */
+            background: #fff;   /* fondo blanco */
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .oval-image {
-            object-fit: contain !important; /* Fuerza que la imagen entera sea visible */
+
+        /* Efecto hover */
+        .logo-wrapper:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Imagen responsive */
+        .logo-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        /* Responsive para celulares */
+        @media (max-width: 576px) {
+            .logo-wrapper {
+                width: 70px; /* más pequeño en móviles */
+                padding: 3px;
+            }
         }
     </style>
     {{-- Stilos para los iconos --}}
@@ -340,13 +366,12 @@
       <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand oval-container d-flex justify-content-center align-items-center shadow" 
-                href="#"
-                style="width: 130px; height: 45px;">
-                
-                <img src="{{ asset('storage/images/logo/2.jpg') }}" 
-                        alt="Mi Tienda" 
-                    class="h-100 w-auto oval-image">
+            <a class="navbar-brand d-flex justify-content-center align-items-center" href="#">
+                <div class="logo-wrapper shadow-lg">
+                    <img src="{{ asset('storage/images/logo/4.png') }}" 
+                        alt="Imágenes Santa Bárbara" 
+                        class="img-fluid">
+                </div>
             </a>
              
             <!-- Botón para móviles -->
@@ -440,7 +465,7 @@
 
                 <!-- 2. Jesús Buen Pastor -->
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/images/carrusel/navidenas.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/navidena.jpg') }}"
                     class="d-block w-100 hero-image"
                     alt="Jesús Buen Pastor">
                     <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
@@ -453,7 +478,7 @@
 
                 <!-- 3. Crucifixión -->
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/images/carrusel/esotericas.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/esoterica.jpg') }}"
                     class="d-block w-100 hero-image"
                     alt="Jesús Buen Pastor">                    <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
                         <div class="bg-dark bg-opacity-75 rounded p-1 p-md-2 d-inline-block" style="max-width: 120%; transform: translateY(20px);">
@@ -466,7 +491,7 @@
                 <!-- 4. Biblia Abierta -->
                 <!-- 3. Crucifixión -->
                 <div class="carousel-item">
-                    <img src="{{ asset('storage/images/carrusel/religiosas.jpg') }}"
+                    <img src="{{ asset('storage/images/carrusel/religiosa.jpg') }}"
                     class="d-block w-100 hero-image"
                     alt="Jesús Buen Pastor">                    
                     <div class="carousel-caption d-flex flex-column justify-content-end pb-2 pb-md-0">
@@ -579,17 +604,18 @@
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3 class="h5 fw-bold mb-3">Contacto</h3>
                     <ul class="list-unstyled text-">
-                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@mitienda.com</li>
-                        <li class="mb-2"><i class="bi bi-phone me-2"></i> +123 456 7890</li>
-                        <li><i class="bi bi-geo-alt me-2"></i> Av. Principal 123, Ciudad</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i>info@ceramicasantabarbara.com
+                        </li>
+                        <li class="mb-2"><i class="bi bi-phone me-2"></i> +57 3202683321</li>
+                        <li><i class="bi bi-geo-alt me-2"></i> cll 11 #13-119 san Antonio del Tachira</li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
                     <h3 class="h5 fw-bold mb-3">Horario</h3>
                     <ul class="list-unstyled text-">
-                        <li class="mb-2">Lunes - Viernes: 9am - 7pm</li>
-                        <li class="mb-2">Sábado: 9am - 2pm</li>
-                        <li>Domingo: Cerrado</li>
+                        <li class="mb-2">Lunes - Viernes: 8am - 6pm</li>
+                        <li class="mb-2">Sábados y domingos : 8am - 1pm</li>
+                        {{-- <li>Domingo: 8am - 1pm</li> --}}
                     </ul>
                 </div>
             </div>
@@ -602,119 +628,187 @@
 
     <!-- Modal de Artículo -->
     @if($mostrarModal && $articuloSeleccionado)
-        <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);" wire:click="cerrarModal">
+       <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);" wire:click="cerrarModal">
             <div class="modal-dialog modal-lg modal-dialog-centered" @click.stop>
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title h4">{{ $articuloSeleccionado->nombre }}</h2>
-                        <button type="button" class="btn-close" wire:click="cerrarModal" aria-label="Close"></button>
+                <div class="modal-content modal-enhanced">
+                    <!-- Header mejorado -->
+                    <div class="modal-header modal-header-enhanced">
+                        <div class="d-flex align-items-center w-100">
+                            <div class="flex-grow-1">
+                                <h2 class="modal-title h4 mb-1">{{ $articuloSeleccionado->nombre }}</h2>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge badge-category">
+                                        <i class="bi bi-tag me-1"></i>{{ $articuloSeleccionado->categoria->nombre }}
+                                    </span>
+                                    @if($articuloSeleccionado->stock > 0)
+                                        <span class="badge badge-stock">
+                                            <i class="bi bi-check-circle me-1"></i>En stock
+                                        </span>
+                                    @else
+                                        <span class="badge badge-warning-custom">
+                                            <i class="bi bi-clock me-1"></i>Consultar disponibilidad
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <button type="button" class="btn-close btn-close-custom" wire:click="cerrarModal" aria-label="Close"></button>
+                        </div>
                     </div>
+
                     <div class="modal-body">
+                        <!-- Carrusel de imágenes mejorado -->
                         @if($articuloSeleccionado->fotos->isNotEmpty())
-                            <div id="articuloCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
-                                <div class="carousel-inner rounded-3 overflow-hidden">
+                            <div id="articuloCarousel" class="carousel slide mb-4 carousel-enhanced" data-bs-ride="carousel">
+                                <div class="carousel-inner rounded-3 overflow-hidden" style="max-height: 500px;">
                                     @foreach($articuloSeleccionado->fotos as $key => $foto)
                                         <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                            <img src="{{ asset('storage/' . $foto->url) }}"
-                                                 class="d-block w-100 modal-img"
-                                                 alt="Foto {{ $key + 1 }} de {{ $articuloSeleccionado->nombre }}">
+                                            <div class="d-flex justify-content-center align-items-center h-100">
+                                                <img src="{{ asset('storage/' . $foto->url) }}"
+                                                    class="img-fluid modal-img-full"
+                                                    alt="Foto {{ $key + 1 }} de {{ $articuloSeleccionado->nombre }}"
+                                                    loading="lazy"
+                                                    style="max-height: 500px; width: auto;">
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
                                 @if($articuloSeleccionado->fotos->count() > 1)
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#articuloCarousel" data-bs-slide="prev">
+                                    <button class="carousel-control-prev carousel-control-custom" type="button" data-bs-target="#articuloCarousel" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Anterior</span>
                                     </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#articuloCarousel" data-bs-slide="next">
+                                    <button class="carousel-control-next carousel-control-custom" type="button" data-bs-target="#articuloCarousel" data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Siguiente</span>
                                     </button>
-                                    <div class="carousel-indicators position-static mt-3">
+                                    <div class="carousel-indicators-custom mt-3">
                                         @foreach($articuloSeleccionado->fotos as $key => $foto)
                                             <button type="button" data-bs-target="#articuloCarousel"
                                                     data-bs-slide-to="{{ $key }}"
-                                                    class="{{ $key === 0 ? 'active' : '' }} bg-secondary"
+                                                    class="indicator-custom {{ $key === 0 ? 'active' : '' }}"
                                                     aria-current="{{ $key === 0 ? 'true' : 'false' }}"
-                                                    aria-label="Slide {{ $key + 1 }}"></button>
+                                                    aria-label="Slide {{ $key + 1 }}">
+                                                <img src="{{ asset('storage/' . $foto->url) }}" 
+                                                    class="indicator-img"
+                                                    alt="Miniatura {{ $key + 1 }}">
+                                            </button>
                                         @endforeach
                                     </div>
                                 @endif
                             </div>
                         @else
-                            <div class="text-center py-4 bg-light rounded mb-4">
+                            <div class="text-center py-4 bg-light rounded mb-4 no-images">
                                 <i class="bi bi-image text-muted fs-1 mb-2"></i>
                                 <p class="text-muted">Este artículo no tiene imágenes disponibles</p>
                             </div>
                         @endif
 
+                        <!-- Contenido en dos columnas (distribución original) -->
                         <div class="row">
+                            <!-- Columna izquierda -->
                             <div class="col-md-6 mb-3 mb-md-0">
-                                <h3 class="h5 fw-bold">Descripción</h3>
-                                <p class="text-muted">{{ $articuloSeleccionado->descripcion }}</p>
+                                <h3 class="h5 fw-bold section-title">
+                                    <i class="bi bi-card-text me-2"></i>Descripción
+                                </h3>
+                                <p class="text-muted description-text">{{ $articuloSeleccionado->descripcion }}</p>
 
-                                <h3 class="h5 fw-bold">Materiales de construcción</h3>
+                                <h3 class="h5 fw-bold section-title mt-4">
+                                    <i class="bi bi-hammer me-2"></i>Materiales de construcción
+                                </h3>
                                 @if(isset($articuloSeleccionado->materiales) && count($articuloSeleccionado->materiales) > 0)
-                                    <ul class="material-list">
+                                    <div class="material-list-enhanced">
                                         @foreach ($articuloSeleccionado->materiales as $material)
-                                            <li class="text">{{ $material->nombre }}</li>
+                                            <div class="material-item">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span class="material-name">{{ $material->nombre }}</span>
+                                            </div>
                                         @endforeach
-                                    </ul>
-                                @else
-                                    <p class="text">No hay materiales disponibles.</p>
-                                @endif
-
-                            </div>
-                            <div class="col-md-6">
-                                <!-- Otras partes de tu vista... -->
-
-                                    <div class="dimensiones-container">
-                                        <div class="d-flex align-items-center mb-2"> <!-- Fila única para título y texto -->
-                                            <h4 class="h5 fw-bold mb-0 me-2">Dimensiones</h4>
-                                            <small class="text-muted">(consulta disponibilidad)</small>
-                                        </div>  
-                                        @if(isset($articuloSeleccionado->numerales) && $articuloSeleccionado->numerales->isNotEmpty())
-                                    
-                                        <div class="dimensiones-list">
-                                            @foreach($articuloSeleccionado->numerales as $numeral)
-                                                <div class="dimension-item">
-                                                    <span class="numeral"><strong>#{{ $numeral->numero }}:</strong> </span>
-                                                    <span class="dimensiones">
-                                                        @foreach($numeral->dimensiones as $dimension)
-                                                             {{ $dimension->medida }}:cm
-                                                            @if(!$loop->last) | @endif
-                                                        @endforeach
-                                                    </span>
-                                                </div>
-                                            @endforeach
-                                        </div>
                                     </div>
                                 @else
-                                    <p class="no-dimensiones">No hay especificaciones disponibles.</p>
+                                    <p class="text-muted no-materials">No hay materiales disponibles.</p>
                                 @endif
-
-                                {{-- <h3 class="h5 fw-bold">Dimensiones</h3>
-                                <p class="text-muted">{{ $articuloSeleccionado->dimensiones }}</p>
-                                 --}}
-                                <h3 class="h5 fw-bold mt-3">Categoría</h3>
-                                <p class="text-muted">{{ $articuloSeleccionado->categoria->nombre }}</p>
                             </div>
+
+                            <!-- Columna derecha -->
+<div class="col-md-6">
+    <div class="dimensiones-container-enhanced">
+        <div class="d-flex align-items-center mb-3">
+            <h4 class="h5 fw-bold section-title mb-0 me-2">
+                <i class="bi bi-rulers me-2"></i>Dimensiones
+            </h4>
+            <small class="text-muted availability-text">({{ $articuloSeleccionado->numerales->count() }} variantes)</small>
+        </div>  
+        
+        @if(isset($articuloSeleccionado->numerales) && $articuloSeleccionado->numerales->isNotEmpty())
+            <div class="dimensiones-accordion">
+                <!-- Mostrar primeras 3 dimensiones -->
+                @foreach($articuloSeleccionado->numerales->take(3) as $numeral)
+                    <div class="dimension-item-enhanced">
+                        <span class="numeral-badge">#{{ $numeral->numero }}</span>
+                        <span class="dimensiones-text">
+                            @foreach($numeral->dimensiones as $dimension)
+                                {{ $dimension->medida }}:cm
+                                @if(!$loop->last) | @endif
+                            @endforeach
+                        </span>
+                    </div>
+                @endforeach
+                
+                <!-- Dimensiones adicionales colapsadas -->
+                @if($articuloSeleccionado->numerales->count() > 3)
+                    <div class="collapse" id="moreDimensions">
+                        @foreach($articuloSeleccionado->numerales->skip(3) as $numeral)
+                            <div class="dimension-item-enhanced">
+                                <span class="numeral-badge">#{{ $numeral->numero }}</span>
+                                <span class="dimensiones-text">
+                                    @foreach($numeral->dimensiones as $dimension)
+                                        {{ $dimension->medida }}:cm
+                                        @if(!$loop->last) | @endif
+                                    @endforeach
+                                </span>
+                            </div>
+                        @endforeach
+                    </div>
+                    
+                    <button class="btn btn-sm btn-outline-primary w-100 mt-2" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#moreDimensions"
+                            aria-expanded="false">
+                        <i class="bi bi-chevron-down me-1"></i>
+                        Ver {{ $articuloSeleccionado->numerales->count() - 3 }} dimensiones más
+                    </button>
+                @endif
+            </div>
+        @else
+            <p class="no-dimensiones-enhanced">No hay especificaciones disponibles.</p>
+        @endif
+    </div>
+
+    <h3 class="h5 fw-bold section-title mt-4">
+        <i class="bi bi-grid-3x3 me-2"></i>Categoría
+    </h3>
+    <p class="text-muted category-text">{{ $articuloSeleccionado->categoria->nombre }}</p>
+</div>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-center border-top-0">
-                        <a href="https://wa.me/573202683321?text=Hola%20Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
-                           class="btn btn-success px-4 py-2"
-                           target="_blank">
-                            <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
-                            <span class="flag">🇨🇴</span> <!-- Emoji bandera Colombia -->
 
-                        </a>
-                        <a href="https://wa.me/584161346677?text=Hola%20Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
-                            class="btn btn-success px-4 py-2"
+                    <!-- Footer mejorado -->
+                    <div class="modal-footer justify-content-center border-top-0 modal-footer-enhanced">
+                        <div class="whatsapp-buttons-container">
+                            <a href="https://wa.me/573202683321?text=Hola%20Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
+                            class="btn btn-whatsapp-colombia"
                             target="_blank">
-                             <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
-                             <span class="flag">🇻🇪</span> <!-- Emoji bandera Venezuela -->
-                         </a>
+                                <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
+                                <span class="flag">🇨🇴</span>
+                            </a>
+                            <a href="https://wa.me/584161346677?text=Hola%20Estoy%20interesado%20en%20el%20producto%20{{ urlencode($articuloSeleccionado->nombre) }}"
+                                class="btn btn-whatsapp-venezuela"
+                                target="_blank">
+                                <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
+                                <span class="flag">🇻🇪</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -759,4 +853,281 @@
     <!-- Scripts de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Estilos generales del modal */
+        .modal-enhanced {
+            border-radius: 1rem;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .modal-header-enhanced {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-close-custom {
+            filter: invert(1);
+            opacity: 0.8;
+        }
+
+        .btn-close-custom:hover {
+            opacity: 1;
+        }
+
+        /* Badges */
+        .badge-category {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .badge-stock {
+            background: rgba(40, 167, 69, 0.9);
+            color: white;
+        }
+
+        .badge-warning-custom {
+            background: rgba(255, 193, 7, 0.9);
+            color: #212529;
+        }
+
+        /* Carrusel mejorado */
+        .carousel-enhanced {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modal-img-enhanced {
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-control-custom {
+            background: rgba(0,0,0,0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: 0 1rem;
+        }
+
+        .carousel-indicators-custom {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 0;
+        }
+
+        .indicator-custom {
+            width: 60px;
+            height: 60px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 0;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-custom.active {
+            border-color: #667eea;
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .indicator-custom:hover {
+            opacity: 1;
+        }
+
+        .indicator-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Secciones de contenido */
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .description-text {
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Materiales */
+        .material-list-enhanced {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .material-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .material-item:last-child {
+            border-bottom: none;
+        }
+
+        .material-name {
+            color: #495057;
+            font-weight: 500;
+        }
+
+        /* Dimensiones */
+        .dimensiones-container-enhanced {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .dimensiones-list-enhanced {
+            space-y-2;
+        }
+
+        .dimension-item-enhanced {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease;
+        }
+
+        .dimension-item-enhanced:hover {
+            transform: translateX(5px);
+        }
+
+        .numeral-badge {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-right: 1rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .dimensiones-text {
+            color: #495057;
+            font-weight: 500;
+        }
+
+        /* Botones de WhatsApp */
+        .modal-footer-enhanced {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        .whatsapp-buttons-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-whatsapp-colombia,
+        .btn-whatsapp-venezuela {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp-colombia:hover,
+        .btn-whatsapp-venezuela:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        .flag {
+            margin-left: 0.5rem;
+            font-size: 1.1em;
+        }
+
+        /* Estados vacíos */
+        .no-images {
+            border: 2px dashed #dee2e6;
+        }
+
+        .no-materials,
+        .no-dimensiones-enhanced {
+            color: #6c757d;
+            font-style: italic;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .whatsapp-buttons-container {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn-whatsapp-colombia,
+            .btn-whatsapp-venezuela {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal-img-enhanced {
+                height: 300px;
+            }
+            
+            .carousel-indicators-custom {
+                flex-wrap: wrap;
+            }
+            
+            .indicator-custom {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+    <style>
+        .dimensiones-accordion {
+            max-height: none;
+        }
+
+        .collapse.show {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </div>

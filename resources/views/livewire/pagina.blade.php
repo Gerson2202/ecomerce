@@ -369,7 +369,7 @@
             justify-content: center;
             color: #6c757d;
         }
-       
+
         .bg-gradient-primary {
             background: linear-gradient(135deg, #ffd6d6 0%, #ffb6b9 40%, #ff9a8b 100%);
         }
@@ -457,7 +457,6 @@
         .border-primary {
             border-color: #3498db !important;
         }
-    
     </style>
     {{-- Stilos para Header --}}
     <style>
@@ -672,7 +671,7 @@
                                     @if ($articulo->fotos->isNotEmpty())
                                         <div class="image-container">
                                             <img src="{{ asset('storage/' . $articulo->fotos->first()->url) }}"
-                                                class="img-fluid contained-image" alt="{{ $articulo->nombre }}">
+                                                class="img-fluid contained-image " alt="{{ $articulo->nombre }}">
                                         </div>
                                     @else
                                         <div
@@ -681,34 +680,46 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="card-body">
-                                    <h3 class="card-title h5 mb-0">{{ $articulo->nombre }}</h3>
+                                <div class="card-body text-center">
+                                    <div class="d-inline-block">
+                                        <h3 class="card-title h5 mb-0 fw-bold pb-2"
+                                            style="color: #2d3748; letter-spacing: 0.3px;
+                                            border-bottom: 3px solid #ffb6b9;
+                                            padding-bottom: 8px;
+                                            line-height: 1.3;">
+                                            {{ $articulo->nombre }}
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                     <div class="d-flex justify-content-center gap-3 mt-5">
-                        {{-- Botón "Anterior" --}}
+
                         <!-- Botón "Anterior" -->
-                        <button wire:click="previousPage" wire:loading.attr="disabled"
-                            class="btn btn-outline-primary btn-sm" @if ($articulos->onFirstPage()) disabled @endif
-                            onclick="setTimeout(() => document.getElementById('articulos-container').scrollIntoView({ behavior: 'smooth' }), 100)">
+                        <button wire:click="previousPage" wire:loading.attr="disabled" class="btn btn-sm"
+                            style="color: #000000; border-color: #ffb6b9; background-color: transparent;"
+                            @if ($articulos->onFirstPage()) disabled @endif
+                            onclick="setTimeout(() => document.getElementById('articulos-container').scrollIntoView({ behavior: 'smooth' }), 100)"
+                            onmouseover="this.style.backgroundColor='#ffb6b9'; this.style.color='white'"
+                            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#000000'">
                             &laquo; Anterior
                         </button>
 
                         {{-- Indicador de página --}}
-                        <span class="align-self-center text-muted small">
+                        <span class="align-self-center small" style="color: #2d3748; font-weight: 500;">
                             Página {{ $articulos->currentPage() }} de {{ $articulos->lastPage() }}
                         </span>
 
                         <!-- Botón "Siguiente" -->
-                        <button wire:click="nextPage" wire:loading.attr="disabled"
-                            class="btn btn-outline-primary btn-sm" @if (!$articulos->hasMorePages()) disabled @endif
-                            onclick="setTimeout(() => document.getElementById('articulos-container').scrollIntoView({ behavior: 'smooth' }), 100)">
+                        <button wire:click="nextPage" wire:loading.attr="disabled" class="btn btn-sm"
+                            style="color: #000000; border-color: #ffb6b9; background-color: transparent;"
+                            @if (!$articulos->hasMorePages()) disabled @endif
+                            onclick="setTimeout(() => document.getElementById('articulos-container').scrollIntoView({ behavior: 'smooth' }), 100)"
+                            onmouseover="this.style.backgroundColor='#ffb6b9'; this.style.color='white'"
+                            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#000000'">
                             Siguiente &raquo;
                         </button>
-
-
                     </div>
                 </div>
 
@@ -745,7 +756,8 @@
                             <i class="bi bi-phone me-2" style="color:#ff9f43;"></i> +57 3202683321
                         </li>
                         <li>
-                            <i class="bi bi-geo-alt me-2" style="color:#1dd1a1;"></i> cll 11 #13-119 san Antonio del Tachira
+                            <i class="bi bi-geo-alt me-2" style="color:#1dd1a1;"></i> cll 11 #13-119 san Antonio del
+                            Tachira
                         </li>
                     </ul>
                 </div>
@@ -782,14 +794,21 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" @click.stop>
                 <div class="modal-content shadow-lg border-0">
                     <!-- Header con gradiente sutil -->
-                    <div class="modal-header bg-gradient-primary text-white border-bottom-0">
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-box-seam me-3 fs-4"></i>
-                            <h2 class="modal-title h4 mb-0 fw-semibold">{{ $articuloSeleccionado->nombre }}</h2>
+                    <div
+                        class="modal-header bg-gradient-primary text-white border-bottom-0 d-flex justify-content-center align-items-center position-relative">
+                        <!-- Ícono + Nombre centrados -->
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="bi bi-box-seam me-2 fs-4"></i>
+                            <h2 class="modal-title h4 mb-0 fw-semibold text-white text-center">
+                                {{ $articuloSeleccionado->nombre }}
+                            </h2>
                         </div>
-                        <button type="button" class="btn-close btn-close-white" wire:click="cerrarModal"
-                            aria-label="Close"></button>
+
+                        <!-- Botón cerrar a la derecha -->
+                        <button type="button" class="btn-close btn-close-white position-absolute end-0 me-3"
+                            wire:click="cerrarModal" aria-label="Close"></button>
                     </div>
+
 
                     <div class="modal-body bg-light">
                         @if ($articuloSeleccionado->fotos->isNotEmpty())
@@ -845,7 +864,9 @@
                                             <i class="bi bi-text-paragraph text-primary me-2 fs-5"></i>
                                             <h3 class="h5 fw-semibold mb-0 text-dark">Descripción</h3>
                                         </div>
-                                        <p class="text-muted lh-base">{{ $articuloSeleccionado->descripcion }}</p>
+                                        <p class="text-muted lh-base" style="text-align: justify;">
+                                            {{ $articuloSeleccionado->descripcion }}
+                                        </p>
 
                                         <!-- Materiales -->
                                         <div class="mt-4">
@@ -909,12 +930,9 @@
                                                                     <i class="bi bi-hash text-primary me-2 small"></i>
                                                                     {{-- agregar small --}}
                                                                     <span
-                                                                        class="numeral fw-semibold text-dark small">#{{ $numeral->numero }}</span>
+                                                                        class="numeral fw-semibold text-dark small">{{ $numeral->numero }}</span>
                                                                     {{-- agregar small --}}
                                                                 </div>
-                                                                <span class="badge bg-light text-dark small">
-                                                                    {{ $numeral->dimensiones->count() }} medidas
-                                                                </span>
                                                             </div>
                                                             <div class="dimensiones ps-2"> {{-- ps-3 → ps-2 --}}
                                                                 @foreach ($numeral->dimensiones as $dimension)
@@ -1006,7 +1024,7 @@
         </div>
     @endif
 
-    
+
 
     <!-- Botones flotantes redes sociales -->
 

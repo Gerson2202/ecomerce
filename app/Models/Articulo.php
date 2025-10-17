@@ -43,12 +43,19 @@ class Articulo extends Model
     }
 
  
-    public function numerales()
-    {
+    // public function numerales()
+    // {
         
-        return $this->belongsToMany(Numeral::class);
+    //     return $this->belongsToMany(Numeral::class);
         
-    }
+    // }
+
+    // Taer los numerales ordenados de menor a mayor
+       public function numerales()
+        {
+            return $this->belongsToMany(Numeral::class)
+                        ->orderBy('numero', 'asc'); // <-- orden por defecto
+        }
     /**
      * Acceso directo a los registros pivote
      */
